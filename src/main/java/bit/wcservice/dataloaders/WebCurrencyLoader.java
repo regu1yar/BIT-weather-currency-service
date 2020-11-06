@@ -1,9 +1,8 @@
-package bit.wcservice.currency;
+package bit.wcservice.dataloaders;
 
-import bit.wcservice.utils.DateRange;
-import bit.wcservice.utils.WebDataLoader;
+import bit.wcservice.DateRange;
 import currency.wcservice.bit.ValutaDocument;
-import dynamics.currency.wcservice.bit.ValCursDocument;
+import currency.wcservice.bit.ValCursDocument;
 import org.apache.xmlbeans.XmlException;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -16,9 +15,9 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class WebCurrencyLoader implements CurrencyLoader {
+public class WebCurrencyLoader implements HistoryLoader<String> {
     private static final String BASE_URL = "http://www.cbr.ru";
-    private static final WebDataLoader WEB_DATA_LOADER = new WebDataLoader(BASE_URL);
+    private static final WebLoader WEB_DATA_LOADER = new WebLoader(BASE_URL);
 
     private static final String CURRENCY_CODES_PATH = "/scripts/XML_val.asp";
 

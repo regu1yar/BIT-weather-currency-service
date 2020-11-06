@@ -1,4 +1,4 @@
-package bit.wcservice.utils;
+package bit.wcservice;
 
 import java.time.LocalDate;
 import java.util.*;

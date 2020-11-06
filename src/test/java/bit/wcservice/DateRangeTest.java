@@ -1,5 +1,6 @@
-package bit.wcservice.utils;
+package bit.wcservice;
 
+import bit.wcservice.DateRange;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

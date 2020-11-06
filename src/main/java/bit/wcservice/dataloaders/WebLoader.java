@@ -1,12 +1,12 @@
-package bit.wcservice.utils;
+package bit.wcservice.dataloaders;
 
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
 
-public class WebDataLoader {
+public class WebLoader {
     private final WebClient webClient;
 
-    public WebDataLoader(String baseUrl) {
+    public WebLoader(String baseUrl) {
         webClient = WebClient.create(baseUrl);
     }
 
