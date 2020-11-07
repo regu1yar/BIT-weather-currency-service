@@ -14,19 +14,7 @@ public class DefaultHistoryFormatter<DataType> implements HistoryFormatter<DataT
         }
 
         StringBuilder stringBuilder = new StringBuilder();
-        LocalDate from = null;
-        LocalDate to = null;
-        for (LocalDate date : history.keySet()) {
-            if (from == null || date.isBefore(from)) {
-                from = date;
-            }
-
-            if (to == null || date.isAfter(to)) {
-                to = date;
-            }
-        }
-
-        DateRange range = new DateRange(from, to);
+        DateRange range = DateRange.coveringRange(history.keySet());
         stringBuilder.append("History of range ").append(range).append(":\n");
         for (LocalDate date : range) {
             if (!history.containsKey(date)) {

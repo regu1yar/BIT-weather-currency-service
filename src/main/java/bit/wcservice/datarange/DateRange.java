@@ -36,6 +36,22 @@ public class DateRange implements Iterable<LocalDate> {
         return new LocalDateIterator(start, end);
     }
 
+    public static DateRange coveringRange(Set<LocalDate> dates) {
+        LocalDate from = null;
+        LocalDate to = null;
+        for (LocalDate date : dates) {
+            if (from == null || date.isBefore(from)) {
+                from = date;
+            }
+
+            if (to == null || date.isAfter(to)) {
+                to = date;
+            }
+        }
+
+        return new DateRange(from, to);
+    }
+
     public boolean notOverlaps(DateRange other) {
         return other == null || (end.isBefore(other.start) || start.isAfter(other.end));
     }
