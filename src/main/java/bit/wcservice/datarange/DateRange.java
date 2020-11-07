@@ -1,9 +1,14 @@
-package bit.wcservice;
+package bit.wcservice.datarange;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-public class DateRange {
+public class DateRange implements Iterable<LocalDate> {
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
     private final LocalDate start;
     private final LocalDate end;
 
@@ -18,6 +23,17 @@ public class DateRange {
 
     public LocalDate getEnd() {
         return end;
+    }
+
+    @Override
+    public String toString() {
+        return start.format(DATE_FORMATTER) + " - " + end.format(DATE_FORMATTER);
+    }
+
+    @NotNull
+    @Override
+    public Iterator<LocalDate> iterator() {
+        return new LocalDateIterator(start, end);
     }
 
     public boolean notOverlaps(DateRange other) {

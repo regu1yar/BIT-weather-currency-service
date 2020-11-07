@@ -1,6 +1,6 @@
-package bit.wcservice.dataloaders;
+package bit.wcservice.services.dataloaders;
 
-import bit.wcservice.DateRange;
+import bit.wcservice.datarange.DateRange;
 import org.apache.xmlbeans.XmlException;
 
 import java.time.LocalDate;
@@ -40,7 +40,7 @@ public class CachedHistoryLoader<DataType> implements HistoryLoader<DataType> {
             updateCachedRange(leastCoveringRange, webHistoryLoader.loadRangeData(leastCoveringRange));
         }
 
-        for (LocalDate rangeDate = range.getStart(); !rangeDate.isAfter(range.getEnd()); rangeDate = rangeDate.plusDays(1)) {
+        for (LocalDate rangeDate : range) {
             currencyValues.put(rangeDate, cachedCurrencyValuesByDate.get(rangeDate));
         }
 

@@ -1,12 +1,13 @@
-package bit.wcservice;
+package bit.wcservice.datarange;
 
-import bit.wcservice.DateRange;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -72,10 +73,10 @@ class DateRangeTest {
         DateRange union2 = range2.unionToRange(range1);
         assertNotNull(union1);
         assertNotNull(union2);
-        assertEquals(union1.getStart(), today.minusDays(2));
-        assertEquals(union1.getEnd(), today.plusDays(2));
-        assertEquals(union1.getStart(), union2.getStart());
-        assertEquals(union1.getEnd(), union2.getEnd());
+        assertEquals(today.minusDays(2), union1.getStart());
+        assertEquals(today.plusDays(2), union1.getEnd());
+        assertEquals(union2.getStart(), union1.getStart());
+        assertEquals(union2.getEnd(), union1.getEnd());
     }
 
     @Test
@@ -92,10 +93,10 @@ class DateRangeTest {
         DateRange union2 = range2.unionToRange(range1);
         assertNotNull(union1);
         assertNotNull(union2);
-        assertEquals(union1.getStart(), today.minusDays(2));
-        assertEquals(union1.getEnd(), today.plusDays(2));
-        assertEquals(union1.getStart(), union2.getStart());
-        assertEquals(union1.getEnd(), union2.getEnd());
+        assertEquals(today.minusDays(2), union1.getStart());
+        assertEquals(today.plusDays(2), union1.getEnd());
+        assertEquals(union2.getStart(), union1.getStart());
+        assertEquals(union2.getEnd(), union1.getEnd());
     }
 
     @Test
@@ -106,10 +107,10 @@ class DateRangeTest {
         DateRange union2 = range2.unionToRange(range1);
         assertNotNull(union1);
         assertNotNull(union2);
-        assertEquals(union1.getStart(), range1.getStart());
-        assertEquals(union1.getEnd(), range1.getEnd());
-        assertEquals(union1.getStart(), union2.getStart());
-        assertEquals(union1.getEnd(), union2.getEnd());
+        assertEquals(range1.getStart(), union1.getStart());
+        assertEquals(range1.getEnd(), union1.getEnd());
+        assertEquals(union2.getStart(), union1.getStart());
+        assertEquals(union2.getEnd(), union1.getEnd());
     }
 
     @Test
@@ -156,8 +157,8 @@ class DateRangeTest {
         DateRange range2 = new DateRange(today.plusDays(1), today.plusDays(2));
         DateRange leastCoveringRange = DateRange.leastCoveringRange(List.of(range1, range2));
         assertNotNull(leastCoveringRange);
-        assertEquals(leastCoveringRange.getStart(), today.minusDays(2));
-        assertEquals(leastCoveringRange.getEnd(), today.plusDays(2));
+        assertEquals(today.minusDays(2), leastCoveringRange.getStart());
+        assertEquals(today.plusDays(2), leastCoveringRange.getEnd());
     }
 
     @Test
@@ -166,8 +167,8 @@ class DateRangeTest {
         DateRange range2 = new DateRange(today.minusDays(1), today.plusDays(2));
         DateRange leastCoveringRange = DateRange.leastCoveringRange(List.of(range1, range2));
         assertNotNull(leastCoveringRange);
-        assertEquals(leastCoveringRange.getStart(), today.minusDays(2));
-        assertEquals(leastCoveringRange.getEnd(), today.plusDays(2));
+        assertEquals(today.minusDays(2), leastCoveringRange.getStart());
+        assertEquals(today.plusDays(2), leastCoveringRange.getEnd());
     }
 
     @Test
@@ -183,8 +184,8 @@ class DateRangeTest {
         DateRange range2 = new DateRange(today, today.plusDays(2));
         DateRange leastCoveringRange = DateRange.leastCoveringRange(List.of(range1, range2));
         assertNotNull(leastCoveringRange);
-        assertEquals(leastCoveringRange.getStart(), today.minusDays(2));
-        assertEquals(leastCoveringRange.getEnd(), today.plusDays(2));
+        assertEquals(today.minusDays(2), leastCoveringRange.getStart());
+        assertEquals(today.plusDays(2), leastCoveringRange.getEnd());
     }
 
     @Test
@@ -193,8 +194,8 @@ class DateRangeTest {
         DateRange range2 = new DateRange(today.plusDays(2), today.plusDays(2));
         DateRange leastCoveringRange = DateRange.leastCoveringRange(List.of(range1, range2));
         assertNotNull(leastCoveringRange);
-        assertEquals(leastCoveringRange.getStart(), today.minusDays(2));
-        assertEquals(leastCoveringRange.getEnd(), today.plusDays(2));
+        assertEquals(today.minusDays(2), leastCoveringRange.getStart());
+        assertEquals(today.plusDays(2), leastCoveringRange.getEnd());
     }
 
     @Test
@@ -203,7 +204,33 @@ class DateRangeTest {
         DateRange range2 = new DateRange(today, today.plusDays(1));
         DateRange leastCoveringRange = DateRange.leastCoveringRange(List.of(range1, range2));
         assertNotNull(leastCoveringRange);
-        assertEquals(leastCoveringRange.getStart(), today.minusDays(2));
-        assertEquals(leastCoveringRange.getEnd(), today.plusDays(2));
+        assertEquals(today.minusDays(2), leastCoveringRange.getStart());
+        assertEquals(today.plusDays(2), leastCoveringRange.getEnd());
+    }
+
+    @Test
+    void iterationTest() {
+        int rangeLength = 10;
+        LocalDate today = LocalDate.now();
+        LocalDate startDate = today.minusDays(rangeLength);
+        DateRange range = new DateRange(startDate, today);
+        for (LocalDate date : range) {
+            assertEquals(today.minusDays(rangeLength), date);
+            --rangeLength;
+        }
+
+        assertEquals(rangeLength, -1);
+    }
+
+    @Test
+    void streamToListCollectCorrectSize() {
+        int rangeLength = 10;
+        LocalDate today = LocalDate.now();
+        LocalDate startDate = today.minusDays(rangeLength);
+        DateRange range = new DateRange(startDate, today);
+        List<LocalDate> dateRange = StreamSupport.stream(range.spliterator(), false)
+                .collect(Collectors.toList());
+
+        assertEquals(rangeLength + 1, dateRange.size());
     }
 }

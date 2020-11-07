@@ -1,4 +1,4 @@
-<xs:schema targetNamespace="bit.wcservice.weather" attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
     <xs:element name="root">
         <xs:complexType>
             <xs:sequence>
@@ -19,7 +19,7 @@
                 <xs:element name="forecast">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="forecastday">
+                            <xs:element name="forecastday" maxOccurs="unbounded" minOccurs="0">
                                 <xs:complexType>
                                     <xs:sequence>
                                         <xs:element type="xs:date" name="date"/>
@@ -84,7 +84,7 @@
                                                     </xs:element>
                                                     <xs:element type="xs:float" name="wind_mph"/>
                                                     <xs:element type="xs:float" name="wind_kph"/>
-                                                    <xs:element type="xs:byte" name="wind_degree"/>
+                                                    <xs:element type="xs:short" name="wind_degree"/>
                                                     <xs:element type="xs:string" name="wind_dir"/>
                                                     <xs:element type="xs:short" name="pressure_mb"/>
                                                     <xs:element type="xs:float" name="pressure_in"/>

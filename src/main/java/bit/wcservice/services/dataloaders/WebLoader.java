@@ -1,4 +1,4 @@
-package bit.wcservice.dataloaders;
+package bit.wcservice.services.dataloaders;
 
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
