@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class PredictService {
     private static final String WEATHER_REQUEST_CITY = "Moscow";
-    private static final int FEATURE_SOURCE_RANGE = 7;
+    private static final int FEATURE_SOURCE_RANGE = 8;
 
     private final HistoryLoader<DataRecord> currencyLoader;
     private final LocationDispatcher weatherLocationDispatcher;
