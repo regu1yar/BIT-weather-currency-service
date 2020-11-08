@@ -1,12 +1,13 @@
 package bit.wcservice.services.dataloaders;
 
-import bit.wcservice.datarange.DateRange;
+import bit.wcservice.services.datarange.DateRange;
 import org.apache.xmlbeans.XmlException;
 
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class CachedHistoryLoader<DataType> implements HistoryLoader<DataType> {
     private final HistoryLoader<DataType> webHistoryLoader;
@@ -18,12 +19,15 @@ public class CachedHistoryLoader<DataType> implements HistoryLoader<DataType> {
     }
 
     @Override
-    public DataType loadDailyData(LocalDate date) throws XmlException {
+    public Optional<DataType> loadDailyData(LocalDate date) throws XmlException {
         if (!cachedCurrencyValuesByDate.containsKey(date)) {
-            cachedCurrencyValuesByDate.put(date, webHistoryLoader.loadDailyData(date));
+            Optional<DataType> loadedData = webHistoryLoader.loadDailyData(date);
+            loadedData.ifPresent(dataType -> cachedCurrencyValuesByDate.put(date, dataType));
+
+            return loadedData;
         }
 
-        return cachedCurrencyValuesByDate.get(date);
+        return Optional.of(cachedCurrencyValuesByDate.get(date));
     }
 
     @Override
@@ -41,7 +45,9 @@ public class CachedHistoryLoader<DataType> implements HistoryLoader<DataType> {
         }
 
         for (LocalDate rangeDate : range) {
-            currencyValues.put(rangeDate, cachedCurrencyValuesByDate.get(rangeDate));
+            if (cachedCurrencyValuesByDate.containsKey(rangeDate)) {
+                currencyValues.put(rangeDate, cachedCurrencyValuesByDate.get(rangeDate));
+            }
         }
 
         return currencyValues;

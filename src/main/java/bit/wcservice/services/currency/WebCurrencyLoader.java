@@ -1,8 +1,10 @@
 package bit.wcservice.services.currency;
 
-import bit.wcservice.datarange.DateRange;
+import bit.wcservice.services.datarange.DateRange;
 import bit.wcservice.services.dataloaders.HistoryLoader;
 import bit.wcservice.services.dataloaders.WebLoader;
+import bit.wcservice.services.datarecord.CurrencyRecord;
+import bit.wcservice.services.datarecord.DataRecord;
 import noNamespace.ValCursDocument;
 import noNamespace.ValutaDocument;
 import org.apache.xmlbeans.XmlException;
@@ -11,15 +13,12 @@ import org.springframework.util.MultiValueMap;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.StreamSupport;
 
-public class WebCurrencyLoader implements HistoryLoader<String> {
+public class WebCurrencyLoader implements HistoryLoader<DataRecord> {
     private static final String BASE_URL = "http://www.cbr.ru";
     private static final WebLoader WEB_DATA_LOADER = new WebLoader(BASE_URL);
 
@@ -39,12 +38,17 @@ public class WebCurrencyLoader implements HistoryLoader<String> {
     private String lastUSDCode = "R01235";
 
     @Override
-    public String loadDailyData(LocalDate date) throws XmlException {
-        return loadRangeData(new DateRange(date, date)).get(date);
+    public Optional<DataRecord> loadDailyData(LocalDate date) throws XmlException {
+        Map<LocalDate, DataRecord> todayData = loadRangeData(new DateRange(date, date));
+        if (todayData.containsKey(date) && todayData.get(date) != null) {
+            return Optional.of(todayData.get(date));
+        } else {
+            return Optional.empty();
+        }
     }
 
     @Override
-    public Map<LocalDate, String> loadRangeData(DateRange range) throws XmlException {
+    public Map<LocalDate, DataRecord> loadRangeData(DateRange range) throws XmlException {
         loadCurrencyCode();
         return loadRange(range);
     }
@@ -59,15 +63,15 @@ public class WebCurrencyLoader implements HistoryLoader<String> {
         }
     }
 
-    private Map<LocalDate, String> loadRange(DateRange range) throws XmlException {
+    private Map<LocalDate, DataRecord> loadRange(DateRange range) throws XmlException {
         MultiValueMap<String, String> queryArguments = new LinkedMultiValueMap<>();
         queryArguments.add(RANGE_START_QUERY_PARAMETER_NAME, range.getStart().format(REQUEST_DATE_FORMATTER));
         queryArguments.add(RANGE_END_QUERY_PARAMETER_NAME, range.getEnd().format(REQUEST_DATE_FORMATTER));
         queryArguments.add(CURRENCY_CODE_QUERY_PARAMETER_NAME, lastUSDCode);
 
         String xmlResponse = WEB_DATA_LOADER.loadData(CURRENCY_VALUES_PATH, queryArguments);
-        ValCursDocument.ValCurs.Record[] currencyValues =
-                ValCursDocument.Factory.parse(xmlResponse).getValCurs().getRecordArray();
+        ValCursDocument.ValCurs currency = ValCursDocument.Factory.parse(xmlResponse).getValCurs();
+        ValCursDocument.ValCurs.Record[] currencyValues = currency.getRecordArray();
 
         Set<String> loadedDates = Arrays.stream(currencyValues)
                 .map(ValCursDocument.ValCurs.Record::getDate)
@@ -79,6 +83,9 @@ public class WebCurrencyLoader implements HistoryLoader<String> {
 
         return IntStream.range(0, dateRange.size())
                 .boxed()
-                .collect(Collectors.toMap(dateRange::get, i -> currencyValues[i].getValue()));
+                .collect(Collectors.toMap(
+                        dateRange::get,
+                        i -> new CurrencyRecord(currencyValues[i], USD_CURRENCY_NAME)
+                ));
     }
 }

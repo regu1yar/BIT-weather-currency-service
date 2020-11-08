@@ -1,26 +1,32 @@
 package bit.wcservice.services.currency;
 
-import bit.wcservice.datarange.DateRange;
-import bit.wcservice.services.dataloaders.CachedHistoryLoader;
+import bit.wcservice.services.datarange.DateRange;
 import bit.wcservice.services.dataloaders.HistoryLoader;
+import bit.wcservice.services.datarecord.DataRecord;
 import bit.wcservice.services.formatters.HistoryFormatter;
-import org.apache.xmlbeans.XmlException;
 
 import java.time.LocalDate;
 import java.util.Map;
+import java.util.Optional;
 
 public class CurrencyService {
-    private static final HistoryLoader<String> USD_HISTORY_LOADER = new CachedHistoryLoader<>(new WebCurrencyLoader());
-    private final HistoryFormatter<String> historyFormatter;
+    private final HistoryLoader<DataRecord> usdHistoryLoader;
+    private final HistoryFormatter<DataRecord> historyFormatter;
 
-    public CurrencyService(HistoryFormatter<String> historyFormatter) {
+    public CurrencyService(HistoryLoader<DataRecord> usdHistoryLoader, HistoryFormatter<DataRecord> historyFormatter) {
+        this.usdHistoryLoader = usdHistoryLoader;
         this.historyFormatter = historyFormatter;
     }
 
     public String loadCurrentUSDValue() {
         try {
-            return USD_HISTORY_LOADER.loadDailyData(LocalDate.now());
-        } catch (XmlException e) {
+            Optional<DataRecord> loadedData = usdHistoryLoader.loadDailyData(LocalDate.now());
+            if (loadedData.isEmpty()) {
+                return "No current data available";
+            } else {
+                return loadedData.get().getRepresentation();
+            }
+        } catch (Exception e) {
             e.printStackTrace();
             return e.getMessage();
         }
@@ -29,11 +35,11 @@ public class CurrencyService {
     public String loadLastDaysUSDHistory(int days) {
         LocalDate endDate = LocalDate.now();
         LocalDate startDate = endDate.minusDays(days - 1);
-        Map<LocalDate, String> history;
+        Map<LocalDate, DataRecord> history;
 
         try {
-            history = USD_HISTORY_LOADER.loadRangeData(new DateRange(startDate, endDate));
-        } catch (XmlException e) {
+            history = usdHistoryLoader.loadRangeData(new DateRange(startDate, endDate));
+        } catch (Exception e) {
             e.printStackTrace();
             return e.getMessage();
         }

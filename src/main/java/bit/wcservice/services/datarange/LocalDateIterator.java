@@ -1,4 +1,4 @@
-package bit.wcservice.datarange;
+package bit.wcservice.services.datarange;
 
 import java.time.LocalDate;
 import java.util.Iterator;

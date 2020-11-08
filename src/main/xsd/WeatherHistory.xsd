@@ -38,8 +38,8 @@
                                                     <xs:element type="xs:float" name="totalprecip_mm"/>
                                                     <xs:element type="xs:float" name="totalprecip_in"/>
                                                     <xs:element type="xs:float" name="avgvis_km"/>
-                                                    <xs:element type="xs:byte" name="avgvis_miles"/>
-                                                    <xs:element type="xs:byte" name="avghumidity"/>
+                                                    <xs:element type="xs:float" name="avgvis_miles"/>
+                                                    <xs:element type="xs:float" name="avghumidity"/>
                                                     <xs:element name="condition">
                                                         <xs:complexType>
                                                             <xs:sequence>
@@ -49,7 +49,7 @@
                                                             </xs:sequence>
                                                         </xs:complexType>
                                                     </xs:element>
-                                                    <xs:element type="xs:byte" name="uv"/>
+                                                    <xs:element type="xs:float" name="uv"/>
                                                 </xs:sequence>
                                             </xs:complexType>
                                         </xs:element>
@@ -61,7 +61,7 @@
                                                     <xs:element type="xs:string" name="moonrise"/>
                                                     <xs:element type="xs:string" name="moonset"/>
                                                     <xs:element type="xs:string" name="moon_phase"/>
-                                                    <xs:element type="xs:byte" name="moon_illumination"/>
+                                                    <xs:element type="xs:float" name="moon_illumination"/>
                                                 </xs:sequence>
                                             </xs:complexType>
                                         </xs:element>
@@ -72,7 +72,7 @@
                                                     <xs:element type="xs:string" name="time"/>
                                                     <xs:element type="xs:float" name="temp_c"/>
                                                     <xs:element type="xs:float" name="temp_f"/>
-                                                    <xs:element type="xs:byte" name="is_day"/>
+                                                    <xs:element type="xs:float" name="is_day"/>
                                                     <xs:element name="condition">
                                                         <xs:complexType>
                                                             <xs:sequence>
@@ -90,8 +90,8 @@
                                                     <xs:element type="xs:float" name="pressure_in"/>
                                                     <xs:element type="xs:float" name="precip_mm"/>
                                                     <xs:element type="xs:float" name="precip_in"/>
-                                                    <xs:element type="xs:byte" name="humidity"/>
-                                                    <xs:element type="xs:byte" name="cloud"/>
+                                                    <xs:element type="xs:float" name="humidity"/>
+                                                    <xs:element type="xs:float" name="cloud"/>
                                                     <xs:element type="xs:float" name="feelslike_c"/>
                                                     <xs:element type="xs:float" name="feelslike_f"/>
                                                     <xs:element type="xs:float" name="windchill_c"/>
@@ -100,12 +100,12 @@
                                                     <xs:element type="xs:float" name="heatindex_f"/>
                                                     <xs:element type="xs:float" name="dewpoint_c"/>
                                                     <xs:element type="xs:float" name="dewpoint_f"/>
-                                                    <xs:element type="xs:byte" name="will_it_rain"/>
-                                                    <xs:element type="xs:byte" name="chance_of_rain"/>
-                                                    <xs:element type="xs:byte" name="will_it_snow"/>
-                                                    <xs:element type="xs:byte" name="chance_of_snow"/>
+                                                    <xs:element type="xs:float" name="will_it_rain"/>
+                                                    <xs:element type="xs:float" name="chance_of_rain"/>
+                                                    <xs:element type="xs:float" name="will_it_snow"/>
+                                                    <xs:element type="xs:float" name="chance_of_snow"/>
                                                     <xs:element type="xs:float" name="vis_km"/>
-                                                    <xs:element type="xs:byte" name="vis_miles"/>
+                                                    <xs:element type="xs:float" name="vis_miles"/>
                                                     <xs:element type="xs:float" name="gust_mph"/>
                                                     <xs:element type="xs:float" name="gust_kph"/>
                                                 </xs:sequence>

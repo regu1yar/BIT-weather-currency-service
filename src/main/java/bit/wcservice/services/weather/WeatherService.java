@@ -1,32 +1,31 @@
 package bit.wcservice.services.weather;
 
-import bit.wcservice.datarange.DateRange;
-import bit.wcservice.services.dataloaders.CachedHistoryLoader;
-import bit.wcservice.services.dataloaders.HistoryLoader;
+import bit.wcservice.services.datarange.DateRange;
+import bit.wcservice.services.datarecord.DataRecord;
 import bit.wcservice.services.formatters.HistoryFormatter;
-import noNamespace.RootDocument.Root.Forecast.Forecastday;
-import org.apache.xmlbeans.XmlException;
 
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class WeatherService {
-    private final Map<String, HistoryLoader<Forecastday>> locationLoaders = new HashMap<>();
-    private final HistoryFormatter<Forecastday> historyFormatter;
+    private final LocationDispatcher locationDispatcher;
+    private final HistoryFormatter<DataRecord> historyFormatter;
 
-    public WeatherService(HistoryFormatter<Forecastday> historyFormatter) {
+    public WeatherService(LocationDispatcher locationDispatcher, HistoryFormatter<DataRecord> historyFormatter) {
+        this.locationDispatcher = locationDispatcher;
         this.historyFormatter = historyFormatter;
     }
 
     public String loadCurrentWeatherIn(String location) {
-        if (!locationLoaders.containsKey(location)) {
-            addDataLoader(location);
-        }
-
         try {
-            return locationLoaders.get(location).loadDailyData(LocalDate.now()).toString();
-        } catch (XmlException e) {
+            Optional<DataRecord> loadedData = locationDispatcher.getLoaderByLocation(location).loadDailyData(LocalDate.now());
+            if (loadedData.isEmpty()) {
+                return "No current data available";
+            } else {
+                return loadedData.get().getRepresentation();
+            }
+        } catch (Exception e) {
             e.printStackTrace();
             return e.getMessage();
         }
@@ -35,26 +34,16 @@ public class WeatherService {
     public String loadLastDaysWeatherHistoryInLocation(int days, String location) {
         LocalDate endDate = LocalDate.now();
         LocalDate startDate = endDate.minusDays(days - 1);
-        Map<LocalDate, Forecastday> history;
-
-        if (!locationLoaders.containsKey(location)) {
-            addDataLoader(location);
-        }
+        Map<LocalDate, DataRecord> history;
 
         try {
-            history = locationLoaders.get(location).loadRangeData(new DateRange(startDate, endDate));
-        } catch (XmlException e) {
+            history = locationDispatcher.getLoaderByLocation(location).loadRangeData(new DateRange(startDate, endDate));
+        } catch (Exception e) {
             e.printStackTrace();
             return e.getMessage();
         }
 
         return historyFormatter.formatHistory(history);
-    }
-
-    private void addDataLoader(String location) {
-        if (!locationLoaders.containsKey(location)) {
-            locationLoaders.put(location, new CachedHistoryLoader<>(new WebWeatherLoader(location)));
-        }
     }
 }
 

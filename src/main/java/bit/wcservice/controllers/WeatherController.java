@@ -1,6 +1,5 @@
 package bit.wcservice.controllers;
 
-import bit.wcservice.services.currency.CurrencyService;
 import bit.wcservice.services.weather.WeatherService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,8 +18,8 @@ public class WeatherController {
     }
 
     @GetMapping
-    public String getCurrency(@RequestParam Optional<Integer> range,
-                              @RequestParam(defaultValue = "Moscow") String city) {
+    public String getWeather(@RequestParam Optional<Integer> range,
+                             @RequestParam(defaultValue = "Moscow") String city) {
         String responseString;
         if (range.isEmpty()) {
             responseString = weatherService.loadCurrentWeatherIn(city.toLowerCase());

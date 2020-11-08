@@ -1,40 +1,28 @@
-package bit.wcservice.services.formatters;
+package bit.wcservice.services.datarecord;
 
-import bit.wcservice.datarange.DateRange;
 import noNamespace.RootDocument.Root.Forecast.Forecastday;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Map;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
-public class WeatherHistoryFormatter implements HistoryFormatter<Forecastday> {
-    @Override
-    public String formatHistory(Map<LocalDate, Forecastday> history) {
-        if (history.isEmpty()) {
-            return "Empty history";
-        }
+public class WeatherRecord implements DataRecord {
+    private final Forecastday forecast;
+    private final String location;
 
-        DateRange range = DateRange.coveringRange(history.keySet());
-        StringBuilder stringBuilder = new StringBuilder();
-        for (LocalDate date : range) {
-            if (!history.containsKey(date)) {
-                continue;
-            }
-
-            stringBuilder
-                    .append(date.format(DateTimeFormatter.ofPattern("dd/MM/yyy"))).append(":\n")
-                    .append(formatForecast(history.get(date))).append('\n');
-        }
-
-        return stringBuilder.toString();
+    public WeatherRecord(Forecastday forecast, String location) {
+        this.forecast = forecast;
+        this.location = location;
     }
 
-    private String formatForecast(Forecastday forecast) {
+    @Override
+    public String getRepresentation() {
         StringBuilder stringBuilder = new StringBuilder();
         Forecastday.Day dayForecast = forecast.getDay();
         Forecastday.Astro astroForecast = forecast.getAstro();
 
         stringBuilder
+                .append("Weather in ").append(location).append(":\n")
                 .append("Max temperature: ").append(dayForecast.getMaxtempC()).append(" C\n")
                 .append("Min temperature: ").append(dayForecast.getMintempC()).append(" C\n")
                 .append("Average temperature: ").append(dayForecast.getAvgtempC()).append(" C\n")
@@ -43,10 +31,21 @@ public class WeatherHistoryFormatter implements HistoryFormatter<Forecastday> {
                 .append("Average visibility: ").append(dayForecast.getAvgvisKm()).append(" km\n")
                 .append("Average humidity: ").append(dayForecast.getAvghumidity()).append("%\n")
                 .append("UV index: ").append(dayForecast.getUv()).append('\n')
-                .append("Weather condition: ").append(dayForecast.getCondition()).append('\n')
+                .append("Weather condition: ").append(dayForecast.getCondition().getText()).append('\n')
                 .append("Sunrise: ").append(astroForecast.getSunrise()).append('\n')
                 .append("Sunset: ").append(astroForecast.getSunset()).append('\n');
 
         return stringBuilder.toString();
+    }
+
+    @Override
+    public List<Double> extractFeatures() {
+        Forecastday.Day dayForecast = forecast.getDay();
+
+        List<Float> floatFeatureList = List.of(
+                dayForecast.getAvgtempC()
+        );
+
+        return floatFeatureList.stream().map(Double::valueOf).collect(Collectors.toList());
     }
 }

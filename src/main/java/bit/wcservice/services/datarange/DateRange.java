@@ -1,6 +1,4 @@
-package bit.wcservice.datarange;
-
-import org.jetbrains.annotations.NotNull;
+package bit.wcservice.services.datarange;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -30,7 +28,6 @@ public class DateRange implements Iterable<LocalDate> {
         return start.format(DATE_FORMATTER) + " - " + end.format(DATE_FORMATTER);
     }
 
-    @NotNull
     @Override
     public Iterator<LocalDate> iterator() {
         return new LocalDateIterator(start, end);
@@ -84,6 +81,10 @@ public class DateRange implements Iterable<LocalDate> {
 
     public boolean inside(DateRange other) {
         return other != null && !start.isBefore(other.start) && !end.isAfter(other.end);
+    }
+
+    public boolean contains(LocalDate date) {
+        return date != null && !start.isAfter(date) && !end.isBefore(date);
     }
 
     public List<DateRange> subtract(DateRange other) {
