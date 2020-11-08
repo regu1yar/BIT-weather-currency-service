@@ -2,7 +2,6 @@ package bit.wcservice.services.datarecord;
 
 import noNamespace.RootDocument.Root.Forecast.Forecastday;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
