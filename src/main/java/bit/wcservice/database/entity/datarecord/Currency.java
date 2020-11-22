@@ -1,5 +1,6 @@
 package bit.wcservice.database.entity.datarecord;
 
+import bit.wcservice.database.entity.DataRecord;
 import lombok.Getter;
 import lombok.Setter;
 

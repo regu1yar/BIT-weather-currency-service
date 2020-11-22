@@ -1,5 +1,6 @@
 package bit.wcservice.database.entity.datarecord;
 
+import bit.wcservice.database.entity.DataRecord;
 import lombok.Getter;
 import lombok.Setter;
 import noNamespace.RootDocument.Root.Forecast.Forecastday;
@@ -24,6 +25,10 @@ public class Weather implements DataRecord {
     @Getter
     @Setter
     private String location;
+
+    @Getter
+    @Setter
+    private String prettyLocation;
 
     @Getter
     @Setter
@@ -69,9 +74,10 @@ public class Weather implements DataRecord {
     @Setter
     private String sunset;
 
-    public Weather(LocalDate date, String location, Forecastday forecast) {
+    public Weather(LocalDate date, String location, String prettyLocation, Forecastday forecast) {
         this.date = date;
         this.location = location;
+        this.prettyLocation = prettyLocation;
 
         Forecastday.Day dayForecast = forecast.getDay();
         Forecastday.Astro astroForecast = forecast.getAstro();
@@ -94,7 +100,7 @@ public class Weather implements DataRecord {
 
     @Override
     public String toString() {
-        return "Weather in " + location + " on " + date + ":\n" +
+        return "Weather in " + prettyLocation + " on " + date + ":\n" +
                 "Max temperature: " + maxTemp + " C\n" +
                 "Min temperature: " + minTemp + " C\n" +
                 "Average temperature: " + averageTemp + " C\n" +

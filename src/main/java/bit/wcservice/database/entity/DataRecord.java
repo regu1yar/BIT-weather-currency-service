@@ -1,4 +1,4 @@
-package bit.wcservice.database.entity.datarecord;
+package bit.wcservice.database.entity;
 
 import java.text.ParseException;
 import java.util.List;

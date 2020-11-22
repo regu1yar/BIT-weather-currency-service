@@ -56,6 +56,6 @@ public class WeatherServiceImpl implements WeatherService {
 
     @Override
     public void deleteRangeByLocation(DateRange range, String location) {
-//        weatherRepository.deleteRangeByLocation(range.getStart(), range.getEnd(), location);
+        weatherRepository.deleteRangeByLocation(range.getStart(), range.getEnd(), location);
     }
 }

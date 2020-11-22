@@ -72,7 +72,7 @@ public class WebWeatherLoader implements HistoryLoader<Weather> {
                 .boxed()
                 .collect(Collectors.toMap(
                         dateRange::get,
-                        i -> new Weather(dateRange.get(i), locationString, weatherHistory[i])
+                        i -> new Weather(dateRange.get(i), location, locationString, weatherHistory[i])
                 ));
     }
 }

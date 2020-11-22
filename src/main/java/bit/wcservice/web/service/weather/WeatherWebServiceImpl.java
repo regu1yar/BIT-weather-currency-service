@@ -3,7 +3,7 @@ package bit.wcservice.web.service.weather;
 import bit.wcservice.database.entity.datarecord.Weather;
 import bit.wcservice.util.datarange.DateRange;
 import bit.wcservice.web.service.WeatherWebService;
-import bit.wcservice.web.service.formatter.HistoryFormatter;
+import bit.wcservice.web.service.HistoryFormatter;
 
 import java.time.LocalDate;
 import java.util.Map;

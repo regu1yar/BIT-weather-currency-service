@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -13,8 +14,7 @@ import java.util.List;
 @Repository
 public interface CurrencyRepository extends JpaRepository<Currency, Long> {
 
-    @Query("select currency from Currency currency where currency.date = :date")
-    Currency getByDate(@Param("date") LocalDate date);
+    Currency getByDate(LocalDate date);
 
     @Query("select currency from Currency currency where currency.date between :start and :end")
     List<Currency> getCurrencyHistoryByLocation(@Param("start") LocalDate start,
@@ -24,6 +24,7 @@ public interface CurrencyRepository extends JpaRepository<Currency, Long> {
     boolean existsByDate(@Param("date") LocalDate date);
 
     @Modifying
+    @Transactional
     @Query("delete from Currency currency where currency.date between :start and :end")
     void deleteRange(@Param("start") LocalDate start, @Param("end") LocalDate end);
 

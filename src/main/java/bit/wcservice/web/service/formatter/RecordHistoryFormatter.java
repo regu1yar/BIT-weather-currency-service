@@ -1,7 +1,7 @@
 package bit.wcservice.web.service.formatter;
 
 import bit.wcservice.util.datarange.DateRange;
-import bit.wcservice.database.entity.datarecord.DataRecord;
+import bit.wcservice.web.service.HistoryFormatter;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

@@ -56,6 +56,6 @@ public class CurrencyServiceImpl implements CurrencyService {
 
     @Override
     public void deleteRange(DateRange range) {
-//        currencyRepository.deleteRange(range.getStart(), range.getEnd());
+        currencyRepository.deleteRange(range.getStart(), range.getEnd());
     }
 }
