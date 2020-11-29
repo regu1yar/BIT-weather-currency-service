@@ -28,7 +28,7 @@ public class CurrencyServiceImpl implements CurrencyService {
     @Override
     public Map<LocalDate, Currency> getHistoryOfRange(DateRange range) {
         List<Currency> currencyHistory =
-                currencyRepository.getCurrencyHistoryByLocation(range.getStart(),range.getEnd());
+                currencyRepository.getCurrencyHistory(range.getStart(),range.getEnd());
 
         return IntStream.range(0, currencyHistory.size())
                 .boxed()

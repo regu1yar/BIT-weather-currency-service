@@ -17,8 +17,8 @@ public interface CurrencyRepository extends JpaRepository<Currency, Long> {
     Currency getByDate(LocalDate date);
 
     @Query("select currency from Currency currency where currency.date between :start and :end")
-    List<Currency> getCurrencyHistoryByLocation(@Param("start") LocalDate start,
-                                                @Param("end") LocalDate end);
+    List<Currency> getCurrencyHistory(@Param("start") LocalDate start,
+                                      @Param("end") LocalDate end);
 
     @Query("select case when count(c) > 0 then true else false end from Currency c where c.date = :date")
     boolean existsByDate(@Param("date") LocalDate date);
