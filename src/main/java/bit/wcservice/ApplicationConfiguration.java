@@ -1,16 +1,22 @@
 package bit.wcservice;
 
-import bit.wcservice.services.currency.CurrencyService;
-import bit.wcservice.services.currency.WebCurrencyLoader;
-import bit.wcservice.services.dataloaders.CachedHistoryLoader;
-import bit.wcservice.services.dataloaders.HistoryLoader;
-import bit.wcservice.services.datarecord.DataRecord;
-import bit.wcservice.services.formatters.RecordHistoryFormatter;
-import bit.wcservice.services.predict.PredictModel;
-import bit.wcservice.services.predict.PredictService;
-import bit.wcservice.services.predict.RegressionPredictModel;
-import bit.wcservice.services.weather.LocationDispatcher;
-import bit.wcservice.services.weather.WeatherService;
+import bit.wcservice.database.entity.datarecord.Currency;
+import bit.wcservice.web.service.CurrencyWebService;
+import bit.wcservice.web.service.WeatherWebService;
+import bit.wcservice.web.service.cachedloader.HistoryStorage;
+import bit.wcservice.web.service.cachedloader.storage.CurrencyDBHistoryStorage;
+import bit.wcservice.web.service.currency.CurrencyWebServiceImpl;
+import bit.wcservice.web.service.currency.WebCurrencyLoader;
+import bit.wcservice.web.service.cachedloader.CachedHistoryLoader;
+import bit.wcservice.web.service.HistoryLoader;
+import bit.wcservice.web.service.formatter.RecordHistoryFormatter;
+import bit.wcservice.web.service.predict.PredictModel;
+import bit.wcservice.web.service.predict.PredictWebServiceImpl;
+import bit.wcservice.web.service.predict.RegressionPredictModel;
+import bit.wcservice.web.service.weather.LocationDispatcher;
+import bit.wcservice.web.service.weather.WeatherStorageFactory;
+import bit.wcservice.web.service.weather.WeatherWebServiceImpl;
+import bit.wcservice.web.service.weather.storagefactory.WeatherDBStorageFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,25 +24,37 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ApplicationConfiguration {
     @Bean
-    public HistoryLoader<DataRecord> usdHistoryLoader() {
-        return new CachedHistoryLoader<>(new WebCurrencyLoader());
-    }
-
-    @Bean
-    public LocationDispatcher locationDispatcher() {
-        return new LocationDispatcher();
+    public HistoryStorage<Currency> currencyHistoryStorage() {
+        return new CurrencyDBHistoryStorage();
     }
 
     @Bean
     @Autowired
-    public CurrencyService currencyService(HistoryLoader<DataRecord> usdHistoryLoader) {
-        return new CurrencyService(usdHistoryLoader, new RecordHistoryFormatter());
+    public HistoryLoader<Currency> usdHistoryLoader(HistoryStorage<Currency> currencyHistoryStorage) {
+        return new CachedHistoryLoader<>(new WebCurrencyLoader(), currencyHistoryStorage);
+    }
+
+    @Bean
+    public WeatherStorageFactory weatherStorageFactory() {
+        return new WeatherDBStorageFactory();
     }
 
     @Bean
     @Autowired
-    public WeatherService weatherService(LocationDispatcher locationDispatcher) {
-        return new WeatherService(locationDispatcher, new RecordHistoryFormatter());
+    public LocationDispatcher locationDispatcher(WeatherStorageFactory weatherStorageFactory) {
+        return new LocationDispatcher(weatherStorageFactory);
+    }
+
+    @Bean
+    @Autowired
+    public CurrencyWebService currencyService(HistoryLoader<Currency> usdHistoryLoader) {
+        return new CurrencyWebServiceImpl(usdHistoryLoader, new RecordHistoryFormatter<>());
+    }
+
+    @Bean
+    @Autowired
+    public WeatherWebService weatherService(LocationDispatcher locationDispatcher) {
+        return new WeatherWebServiceImpl(locationDispatcher, new RecordHistoryFormatter<>());
     }
 
     @Bean
@@ -46,9 +64,9 @@ public class ApplicationConfiguration {
 
     @Bean
     @Autowired
-    public PredictService predictService(HistoryLoader<DataRecord> usdHistoryLoader,
-                                         LocationDispatcher locationDispatcher,
-                                         PredictModel predictModel) {
-        return new PredictService(usdHistoryLoader, locationDispatcher, predictModel);
+    public PredictWebServiceImpl predictService(HistoryLoader<Currency> usdHistoryLoader,
+                                                LocationDispatcher locationDispatcher,
+                                                PredictModel predictModel) {
+        return new PredictWebServiceImpl(usdHistoryLoader, locationDispatcher, predictModel);
     }
 }
