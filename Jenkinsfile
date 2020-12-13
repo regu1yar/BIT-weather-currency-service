@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Test') {
             steps {
-                mvn test
+                sh 'mvn test'
             }
         }
     }
@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('Package') {
             steps {
-                mvn package
+                sh 'mvn package'
                 archiveArtifacts artifacts: '**/target/*.jar'
             }
         }
