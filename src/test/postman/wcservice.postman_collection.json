@@ -1,0 +1,110 @@
+{
+	"info": {
+		"_postman_id": "41119895-b4a3-4cd3-acb8-c1e4b1c2e7b9",
+		"name": "wcservice",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "default_currency_request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4db7b153-7483-4b8b-b701-85a85c0936c0",
+						"exec": [
+							"function getCurrentDate() {",
+							"    var today = new Date();",
+							"    var dd = String(today.getDate()).padStart(2, '0');",
+							"    var mm = String(today.getMonth() + 1).padStart(2, '0');",
+							"    var yyyy = today.getFullYear();",
+							"    return yyyy + '-' + mm + '-' + dd;",
+							"}",
+							"",
+							"pm.test(\"Status code is not error\", function () {",
+							"    pm.expect(pm.response.code).to.be.lessThan(400);",
+							"});",
+							"",
+							"pm.test(\"Body contains one of desired strings\", function () {",
+							"    pm.expect(pm.response.text().includes(\"US Dollar value on \" + getCurrentDate()) || pm.response.text().includes(\"No current data available\")).to.be.true;",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOSTNAME}}:{{PORT}}/currency",
+					"host": [
+						"{{HOSTNAME}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"currency"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "range_currency_request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "default_weather_request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "range_weather_request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "city_weather_request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "predict_request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
