@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -155,7 +156,10 @@ class DateRangeTest {
     void leastCoveringRangeOfNonOverlappingRanges() {
         DateRange range1 = new DateRange(today.minusDays(2), today.minusDays(1));
         DateRange range2 = new DateRange(today.plusDays(1), today.plusDays(2));
-        DateRange leastCoveringRange = DateRange.leastCoveringRange(List.of(range1, range2));
+        List<DateRange> ranges = new ArrayList<>();
+        ranges.add(range1);
+        ranges.add(range2);
+        DateRange leastCoveringRange = DateRange.leastCoveringRange(ranges);
         assertNotNull(leastCoveringRange);
         assertEquals(today.minusDays(2), leastCoveringRange.getStart());
         assertEquals(today.plusDays(2), leastCoveringRange.getEnd());
@@ -165,7 +169,10 @@ class DateRangeTest {
     void leastCoveringRangeOfOverlappingRanges() {
         DateRange range1 = new DateRange(today.minusDays(2), today.plusDays(1));
         DateRange range2 = new DateRange(today.minusDays(1), today.plusDays(2));
-        DateRange leastCoveringRange = DateRange.leastCoveringRange(List.of(range1, range2));
+        List<DateRange> ranges = new ArrayList<>();
+        ranges.add(range1);
+        ranges.add(range2);
+        DateRange leastCoveringRange = DateRange.leastCoveringRange(ranges);
         assertNotNull(leastCoveringRange);
         assertEquals(today.minusDays(2), leastCoveringRange.getStart());
         assertEquals(today.plusDays(2), leastCoveringRange.getEnd());
@@ -182,7 +189,10 @@ class DateRangeTest {
     void leastCoveringRangeOfTouchingRanges() {
         DateRange range1 = new DateRange(today.minusDays(2), today);
         DateRange range2 = new DateRange(today, today.plusDays(2));
-        DateRange leastCoveringRange = DateRange.leastCoveringRange(List.of(range1, range2));
+        List<DateRange> ranges = new ArrayList<>();
+        ranges.add(range1);
+        ranges.add(range2);
+        DateRange leastCoveringRange = DateRange.leastCoveringRange(ranges);
         assertNotNull(leastCoveringRange);
         assertEquals(today.minusDays(2), leastCoveringRange.getStart());
         assertEquals(today.plusDays(2), leastCoveringRange.getEnd());
@@ -192,7 +202,10 @@ class DateRangeTest {
     void leastCoveringRangeWithPoint() {
         DateRange range1 = new DateRange(today.minusDays(2), today);
         DateRange range2 = new DateRange(today.plusDays(2), today.plusDays(2));
-        DateRange leastCoveringRange = DateRange.leastCoveringRange(List.of(range1, range2));
+        List<DateRange> ranges = new ArrayList<>();
+        ranges.add(range1);
+        ranges.add(range2);
+        DateRange leastCoveringRange = DateRange.leastCoveringRange(ranges);
         assertNotNull(leastCoveringRange);
         assertEquals(today.minusDays(2), leastCoveringRange.getStart());
         assertEquals(today.plusDays(2), leastCoveringRange.getEnd());
@@ -202,7 +215,10 @@ class DateRangeTest {
     void leastCoveringRangeWithSubrange() {
         DateRange range1 = new DateRange(today.minusDays(2), today.plusDays(2));
         DateRange range2 = new DateRange(today, today.plusDays(1));
-        DateRange leastCoveringRange = DateRange.leastCoveringRange(List.of(range1, range2));
+        List<DateRange> ranges = new ArrayList<>();
+        ranges.add(range1);
+        ranges.add(range2);
+        DateRange leastCoveringRange = DateRange.leastCoveringRange(ranges);
         assertNotNull(leastCoveringRange);
         assertEquals(today.minusDays(2), leastCoveringRange.getStart());
         assertEquals(today.plusDays(2), leastCoveringRange.getEnd());

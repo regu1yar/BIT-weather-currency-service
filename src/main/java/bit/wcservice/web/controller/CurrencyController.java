@@ -20,7 +20,7 @@ public class CurrencyController {
     @GetMapping
     public String getCurrency(@RequestParam Optional<Integer> range) {
         String responseString;
-        if (range.isEmpty()) {
+        if (!range.isPresent()) {
             responseString = currencyWebService.loadCurrentUSDValue();
         } else {
             responseString = currencyWebService.loadLastDaysUSDHistory(range.get());

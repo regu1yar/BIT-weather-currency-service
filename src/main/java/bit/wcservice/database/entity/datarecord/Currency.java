@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -52,6 +53,8 @@ public class Currency implements DataRecord {
     @Override
     public List<Double> extractFeatures() throws ParseException {
         Number number = FORMAT.parse(currencyValue);
-        return List.of(number.doubleValue());
+        List<Double> tmpList = new ArrayList<>();
+        tmpList.add(number.doubleValue());
+        return tmpList;
     }
 }

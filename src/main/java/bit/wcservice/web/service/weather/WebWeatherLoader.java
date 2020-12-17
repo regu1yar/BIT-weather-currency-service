@@ -12,6 +12,7 @@ import org.apache.xmlbeans.XmlException;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -63,10 +64,14 @@ public class WebWeatherLoader implements HistoryLoader<Weather> {
         Forecastday[] weatherHistory = weather.getForecast().getForecastdayArray();
         String locationString = weather.getLocation().getName() + ", " + weather.getLocation().getCountry();
 
-        List<LocalDate> dateRange = Stream.
-                iterate(range.getStart(), localDate -> !localDate.isAfter(range.getEnd()), localDate -> localDate.plusDays(1))
-                .collect(Collectors.toList());
+        List<LocalDate> dateRange = new ArrayList<>();
+        for (LocalDate date : range) {
+            if (date.isAfter(range.getEnd())) {
+                break;
+            }
 
+            dateRange.add(date);
+        }
 
         return IntStream.range(0, dateRange.size())
                 .boxed()

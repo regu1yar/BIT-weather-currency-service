@@ -5,6 +5,7 @@ import bit.wcservice.web.service.HistoryLoader;
 import org.apache.xmlbeans.XmlException;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -40,7 +41,10 @@ public class CachedHistoryLoader<DataType> implements HistoryLoader<DataType> {
         }
 
         if (!range.inside(cachedRange)) {
-            DateRange leastCoveringRange = DateRange.leastCoveringRange(List.of(cachedRange, range));
+            List<DateRange> ranges = new ArrayList<>();
+            ranges.add(cachedRange);
+            ranges.add(range);
+            DateRange leastCoveringRange = DateRange.leastCoveringRange(ranges);
             updateCachedRange(leastCoveringRange, webHistoryLoader.loadRangeData(leastCoveringRange));
         }
 

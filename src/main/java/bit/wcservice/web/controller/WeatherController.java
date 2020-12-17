@@ -21,7 +21,7 @@ public class WeatherController {
     public String getWeather(@RequestParam Optional<Integer> range,
                              @RequestParam(defaultValue = "Moscow") String city) {
         String responseString;
-        if (range.isEmpty()) {
+        if (!range.isPresent()) {
             responseString = weatherWebService.loadCurrentWeatherIn(city.toLowerCase());
         } else {
             responseString = weatherWebService.loadLastDaysWeatherHistoryInLocation(range.get(), city.toLowerCase());
