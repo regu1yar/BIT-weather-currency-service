@@ -148,7 +148,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <javaSource>1.8</javaSource>
+                    <javaSource>11</javaSource>
                     <schemaDirectory>src/main/xsd</schemaDirectory>
                 </configuration>
             </plugin>
