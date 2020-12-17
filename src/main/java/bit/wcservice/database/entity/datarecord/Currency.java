@@ -5,17 +5,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.text.NumberFormat;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 @Entity
 public class Currency implements DataRecord {
-    private static final NumberFormat FORMAT = NumberFormat.getInstance(Locale.getDefault());
-
     @Id
     @Getter
     @Setter
@@ -51,10 +46,9 @@ public class Currency implements DataRecord {
     }
 
     @Override
-    public List<Double> extractFeatures() throws ParseException {
-        Number number = FORMAT.parse(currencyValue);
+    public List<Double> extractFeatures() {
         List<Double> tmpList = new ArrayList<>();
-        tmpList.add(number.doubleValue());
+        tmpList.add(Double.parseDouble(currencyValue));
         return tmpList;
     }
 }

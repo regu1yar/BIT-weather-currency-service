@@ -8,8 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class MapHistoryStorage<DataType> implements HistoryStorage<DataType> {
-    private final Map<LocalDate, DataType> cachedCurrencyValuesByDate = new HashMap<>();
+public class MapHistoryStorage<T> implements HistoryStorage<T> {
+    private final Map<LocalDate, T> cachedCurrencyValuesByDate = new HashMap<>();
 
     @Override
     public boolean isEmpty(LocalDate date) {
@@ -17,22 +17,22 @@ public class MapHistoryStorage<DataType> implements HistoryStorage<DataType> {
     }
 
     @Override
-    public void put(LocalDate date, DataType data) {
+    public void put(LocalDate date, T data) {
         cachedCurrencyValuesByDate.put(date, data);
     }
 
     @Override
-    public void putRange(Map<LocalDate, DataType> historyRange) {
+    public void putRange(Map<LocalDate, T> historyRange) {
         cachedCurrencyValuesByDate.putAll(historyRange);
     }
 
     @Override
-    public DataType get(LocalDate date) {
+    public T get(LocalDate date) {
         return cachedCurrencyValuesByDate.get(date);
     }
 
     @Override
-    public Map<LocalDate, DataType> getHistoryRange(DateRange range) {
+    public Map<LocalDate, T> getHistoryRange(DateRange range) {
         return cachedCurrencyValuesByDate.entrySet().stream()
                 .filter(entry -> range.contains(entry.getKey()))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
