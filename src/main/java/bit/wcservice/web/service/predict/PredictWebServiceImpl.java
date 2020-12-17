@@ -35,15 +35,15 @@ public class PredictWebServiceImpl implements PredictWebService {
         try {
             Map<LocalDate, Currency> currencyData = currencyLoader.loadRangeData(range);
             Map<LocalDate, Double> currencyFeatures = new HashMap<>();
-            for (LocalDate date : currencyData.keySet()) {
-                currencyFeatures.put(date, currencyData.get(date).extractFeatures().get(0));
+            for (Map.Entry<LocalDate, Currency> entry : currencyData.entrySet()) {
+                currencyFeatures.put(entry.getKey(), entry.getValue().extractFeatures().get(0));
             }
 
             Map<LocalDate, Weather> weatherData =
                     weatherLocationDispatcher.getLoaderByLocation(WEATHER_REQUEST_CITY).loadRangeData(range);
             Map<LocalDate, List<Double>> weatherFeatures = new HashMap<>();
-            for (LocalDate date : weatherData.keySet()) {
-                weatherFeatures.put(date, weatherData.get(date).extractFeatures());
+            for (Map.Entry<LocalDate, Weather> entry : weatherData.entrySet()) {
+                weatherFeatures.put(entry.getKey(), entry.getValue().extractFeatures());
             }
 
             return String.valueOf(predictModel.predict(currencyFeatures, weatherFeatures));

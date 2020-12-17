@@ -18,8 +18,8 @@ public class WeatherDBLocationHistoryStorage implements HistoryStorage<Weather> 
     }
 
     @Override
-    public boolean containsDate(LocalDate date) {
-        return weatherService.containsDateAndLocation(date, location);
+    public boolean isEmpty(LocalDate date) {
+        return !weatherService.containsDateAndLocation(date, location);
     }
 
     @Override

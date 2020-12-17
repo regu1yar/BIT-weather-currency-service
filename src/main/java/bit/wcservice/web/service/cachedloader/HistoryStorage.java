@@ -5,10 +5,10 @@ import bit.wcservice.util.datarange.DateRange;
 import java.time.LocalDate;
 import java.util.Map;
 
-public interface HistoryStorage<DataType> {
-    boolean containsDate(LocalDate date);
-    void put(LocalDate date, DataType data);
-    void putRange(Map<LocalDate, DataType> historyRange);
-    DataType get(LocalDate date);
-    Map<LocalDate, DataType> getHistoryRange(DateRange range);
+public interface HistoryStorage<T> {
+    boolean isEmpty(LocalDate date);
+    void put(LocalDate date, T data);
+    void putRange(Map<LocalDate, T> historyRange);
+    T get(LocalDate date);
+    Map<LocalDate, T> getHistoryRange(DateRange range);
 }

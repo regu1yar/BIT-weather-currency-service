@@ -16,13 +16,13 @@ public class CurrencyDBHistoryStorage implements HistoryStorage<Currency> {
     private CurrencyService currencyService;
 
     @Override
-    public boolean containsDate(LocalDate date) {
-        return currencyService.containsDate(date);
+    public boolean isEmpty(LocalDate date) {
+        return !currencyService.containsDate(date);
     }
 
     @Override
     public void put(LocalDate date, Currency data) {
-        if (!containsDate(date)) {
+        if (isEmpty(date)) {
             currencyService.insertCurrencyRecord(data);
         }
     }

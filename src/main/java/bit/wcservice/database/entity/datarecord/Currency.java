@@ -14,7 +14,7 @@ import java.util.Locale;
 
 @Entity
 public class Currency implements DataRecord {
-    private final static NumberFormat FORMAT = NumberFormat.getInstance(Locale.getDefault());
+    private static final NumberFormat FORMAT = NumberFormat.getInstance(Locale.getDefault());
 
     @Id
     @Getter

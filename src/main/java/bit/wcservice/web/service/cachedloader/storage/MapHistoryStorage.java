@@ -12,8 +12,8 @@ public class MapHistoryStorage<DataType> implements HistoryStorage<DataType> {
     private final Map<LocalDate, DataType> cachedCurrencyValuesByDate = new HashMap<>();
 
     @Override
-    public boolean containsDate(LocalDate date) {
-        return cachedCurrencyValuesByDate.containsKey(date);
+    public boolean isEmpty(LocalDate date) {
+        return !cachedCurrencyValuesByDate.containsKey(date);
     }
 
     @Override

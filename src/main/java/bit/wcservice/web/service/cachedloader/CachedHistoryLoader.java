@@ -10,20 +10,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class CachedHistoryLoader<DataType> implements HistoryLoader<DataType> {
-    private final HistoryLoader<DataType> webHistoryLoader;
-    private final HistoryStorage<DataType> historyStorage;
+public class CachedHistoryLoader<T> implements HistoryLoader<T> {
+    private final HistoryLoader<T> webHistoryLoader;
+    private final HistoryStorage<T> historyStorage;
     private DateRange cachedRange = null;
 
-    public CachedHistoryLoader(HistoryLoader<DataType> webHistoryLoader, HistoryStorage<DataType> historyStorage) {
+    public CachedHistoryLoader(HistoryLoader<T> webHistoryLoader, HistoryStorage<T> historyStorage) {
         this.webHistoryLoader = webHistoryLoader;
         this.historyStorage = historyStorage;
     }
 
     @Override
-    public Optional<DataType> loadDailyData(LocalDate date) throws XmlException {
-        if (!historyStorage.containsDate(date)) {
-            Optional<DataType> loadedData = webHistoryLoader.loadDailyData(date);
+    public Optional<T> loadDailyData(LocalDate date) throws XmlException {
+        if (historyStorage.isEmpty(date)) {
+            Optional<T> loadedData = webHistoryLoader.loadDailyData(date);
             loadedData.ifPresent(data -> historyStorage.put(date, data));
 
             return loadedData;
@@ -33,9 +33,9 @@ public class CachedHistoryLoader<DataType> implements HistoryLoader<DataType> {
     }
 
     @Override
-    public Map<LocalDate, DataType> loadRangeData(DateRange range) throws XmlException {
+    public Map<LocalDate, T> loadRangeData(DateRange range) throws XmlException {
         if (cachedRange == null) {
-            Map<LocalDate, DataType> currencyValues = webHistoryLoader.loadRangeData(range);
+            Map<LocalDate, T> currencyValues = webHistoryLoader.loadRangeData(range);
             updateCachedRange(range, currencyValues);
             return currencyValues;
         }
@@ -51,7 +51,7 @@ public class CachedHistoryLoader<DataType> implements HistoryLoader<DataType> {
         return historyStorage.getHistoryRange(range);
     }
 
-    private void updateCachedRange(DateRange range, Map<LocalDate, DataType> rangeValues) {
+    private void updateCachedRange(DateRange range, Map<LocalDate, T> rangeValues) {
         historyStorage.putRange(rangeValues);
         if (cachedRange == null) {
             cachedRange = range;

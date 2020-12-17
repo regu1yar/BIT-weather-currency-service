@@ -7,9 +7,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
-public class RecordHistoryFormatter<DataType> implements HistoryFormatter<DataType> {
+public class RecordHistoryFormatter<T> implements HistoryFormatter<T> {
     @Override
-    public String formatHistory(Map<LocalDate, ? extends DataType> history) {
+    public String formatHistory(Map<LocalDate, ? extends T> history) {
         if (history.isEmpty()) {
             return "Empty history";
         }
