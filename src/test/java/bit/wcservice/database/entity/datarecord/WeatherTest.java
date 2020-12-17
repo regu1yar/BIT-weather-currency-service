@@ -22,11 +22,9 @@ class WeatherTest {
 
     @BeforeEach
     void setUp() throws IOException, XmlException {
-        Class clazz = WeatherTest.class;
         InputStream inputStream = null;
         try {
-            File file = new File(Objects.requireNonNull(clazz.getResource(SAMPLE_PATH)).getFile());
-            inputStream = new FileInputStream(file);
+            inputStream = this.getClass().getResourceAsStream(SAMPLE_PATH);
 
             String weatherXmlData = readFromInputStream(inputStream);
             RootDocument.Root weather = RootDocument.Factory.parse(weatherXmlData).getRoot();
