@@ -32,7 +32,7 @@ public class WeatherWebServiceImpl implements WeatherWebService {
         }
     }
 
-    public String loadLastDaysWeatherHistoryInLocation(int days, String location) {
+    public String loadLastDaysWeatherHistoryInLocation(long days, String location) {
         LocalDate endDate = LocalDate.now();
         LocalDate startDate = endDate.minusDays(days - 1);
         Map<LocalDate, Weather> history;

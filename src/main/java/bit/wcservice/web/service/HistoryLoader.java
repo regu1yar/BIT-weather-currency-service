@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.Map;
 import java.util.Optional;
 
-public interface HistoryLoader<DataType> {
-    Optional<DataType> loadDailyData(LocalDate date) throws XmlException;
-    Map<LocalDate, DataType> loadRangeData(DateRange range) throws XmlException;
+public interface HistoryLoader<T> {
+    Optional<T> loadDailyData(LocalDate date) throws XmlException;
+    Map<LocalDate, T> loadRangeData(DateRange range) throws XmlException;
 }

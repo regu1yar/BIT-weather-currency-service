@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class PredictWebServiceImpl implements PredictWebService {
     private static final String WEATHER_REQUEST_CITY = "Moscow";
-    private static final int FEATURE_SOURCE_RANGE = 8;
+    private static final long FEATURE_SOURCE_RANGE = 8;
 
     private final HistoryLoader<Currency> currencyLoader;
     private final LocationDispatcher weatherLocationDispatcher;

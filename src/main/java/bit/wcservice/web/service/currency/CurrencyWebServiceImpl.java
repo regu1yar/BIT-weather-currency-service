@@ -35,7 +35,7 @@ public class CurrencyWebServiceImpl implements CurrencyWebService {
     }
 
     @Override
-    public String loadLastDaysUSDHistory(int days) {
+    public String loadLastDaysUSDHistory(long days) {
         LocalDate endDate = LocalDate.now();
         LocalDate startDate = endDate.minusDays(days - 1);
         Map<LocalDate, Currency> history;
