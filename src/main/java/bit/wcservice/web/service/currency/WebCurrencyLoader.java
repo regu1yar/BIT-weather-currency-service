@@ -24,7 +24,7 @@ public class WebCurrencyLoader implements HistoryLoader<Currency> {
     private static final String CURRENCY_CODES_PATH = "/scripts/XML_val.asp";
 
     private static final MultiValueMap<String, String> CURRENCY_CODES_QUERY_ARGUMENTS =
-            new LinkedMultiValueMap<>(Map.of("d", List.of("0")));
+            new LinkedMultiValueMap<>(Collections.singletonMap("d", Collections.singletonList("0")));
 
     private static final String CURRENCY_VALUES_PATH = "/scripts/XML_dynamic.asp";
     private static final String RANGE_START_QUERY_PARAMETER_NAME = "date_req1";

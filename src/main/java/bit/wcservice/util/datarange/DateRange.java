@@ -127,7 +127,7 @@ public class DateRange implements Iterable<LocalDate> {
                         .map(DateRange::getEnd)
                         .max(dateComparator);
 
-        if (leftBound.isEmpty() || rightBound.isEmpty()) {
+        if (!leftBound.isPresent() || !rightBound.isPresent()) {
             return null;
         }
 

@@ -7,6 +7,7 @@ import noNamespace.RootDocument.Root.Forecast.Forecastday;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -116,6 +117,6 @@ public class Weather implements DataRecord {
 
     @Override
     public List<Double> extractFeatures() {
-        return List.of(averageTemp);
+        return Collections.singletonList(averageTemp);
     }
 }

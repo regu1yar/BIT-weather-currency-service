@@ -21,7 +21,7 @@ public class WeatherWebServiceImpl implements WeatherWebService {
     public String loadCurrentWeatherIn(String location) {
         try {
             Optional<Weather> loadedData = locationDispatcher.getLoaderByLocation(location).loadDailyData(LocalDate.now());
-            if (loadedData.isEmpty()) {
+            if (!loadedData.isPresent()) {
                 return "No current data available";
             } else {
                 return loadedData.get().toString();

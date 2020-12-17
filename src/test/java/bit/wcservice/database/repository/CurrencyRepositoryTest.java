@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,12 +27,11 @@ class CurrencyRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        currencyRepository.saveAll(List.of(
-                new Currency(BASE_DATE, "75.0", USD_CURRENCY_NAME),
-                new Currency(BASE_DATE.plusDays(1), "80.0", USD_CURRENCY_NAME),
-                new Currency(BASE_DATE.plusDays(2), "85.0", USD_CURRENCY_NAME)
-        ));
-
+        List<Currency> testData = new ArrayList<>();
+        testData.add(new Currency(BASE_DATE, "75.0", USD_CURRENCY_NAME));
+        testData.add(new Currency(BASE_DATE.plusDays(1), "80.0", USD_CURRENCY_NAME));
+        testData.add(new Currency(BASE_DATE.plusDays(2), "85.0", USD_CURRENCY_NAME));
+        currencyRepository.saveAll(testData);
         currencyRepository.flush();
     }
 

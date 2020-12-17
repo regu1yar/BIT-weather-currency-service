@@ -23,7 +23,7 @@ public class CurrencyWebServiceImpl implements CurrencyWebService {
     public String loadCurrentUSDValue() {
         try {
             Optional<Currency> loadedData = usdHistoryLoader.loadDailyData(LocalDate.now());
-            if (loadedData.isEmpty()) {
+            if (!loadedData.isPresent()) {
                 return "No current data available";
             } else {
                 return loadedData.get().toString();
