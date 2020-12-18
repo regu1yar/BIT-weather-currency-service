@@ -119,6 +119,10 @@ class CurrencyServiceImplTest {
 
     @Test
     void deleteRange() {
+        assertTrue(currencyService.containsDate(BASE_DATE));
+        assertTrue(currencyService.containsDate(BASE_DATE.plusDays(1)));
+        assertTrue(currencyService.containsDate(BASE_DATE.plusDays(2)));
+
         currencyService.deleteRange(new DateRange(BASE_DATE, BASE_DATE.plusDays(1)));
 
         assertFalse(currencyService.containsDate(BASE_DATE));
