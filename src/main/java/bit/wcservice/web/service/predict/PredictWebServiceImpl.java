@@ -6,6 +6,8 @@ import bit.wcservice.web.service.PredictWebService;
 import bit.wcservice.web.service.HistoryLoader;
 import bit.wcservice.util.datarange.DateRange;
 import bit.wcservice.web.service.weather.LocationDispatcher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -13,6 +15,8 @@ import java.util.List;
 import java.util.Map;
 
 public class PredictWebServiceImpl implements PredictWebService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(PredictWebServiceImpl.class);
+
     private static final String WEATHER_REQUEST_CITY = "Moscow";
     private static final long FEATURE_SOURCE_RANGE = 8;
 
@@ -48,7 +52,7 @@ public class PredictWebServiceImpl implements PredictWebService {
 
             return String.valueOf(predictModel.predict(currencyFeatures, weatherFeatures));
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage());
             return e.getMessage();
         }
     }

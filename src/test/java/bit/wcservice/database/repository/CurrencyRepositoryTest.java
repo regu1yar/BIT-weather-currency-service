@@ -1,5 +1,6 @@
 package bit.wcservice.database.repository;
 
+import bit.wcservice.database.CurrencyRepositoryFiller;
 import bit.wcservice.database.entity.datarecord.Currency;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,7 +11,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,20 +19,15 @@ import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
 class CurrencyRepositoryTest {
 
-    private final LocalDate BASE_DATE = LocalDate.of(2020, 1, 1);
-    private final String USD_CURRENCY_NAME = "USD";
+    private static final LocalDate BASE_DATE = LocalDate.of(2020, 1, 1);
+    private static final String USD_CURRENCY_NAME = "USD";
 
     @Autowired
     private CurrencyRepository currencyRepository;
 
     @BeforeEach
     void setUp() {
-        List<Currency> testData = new ArrayList<>();
-        testData.add(new Currency(BASE_DATE, "75.0", USD_CURRENCY_NAME));
-        testData.add(new Currency(BASE_DATE.plusDays(1), "80.0", USD_CURRENCY_NAME));
-        testData.add(new Currency(BASE_DATE.plusDays(2), "85.0", USD_CURRENCY_NAME));
-        currencyRepository.saveAll(testData);
-        currencyRepository.flush();
+        CurrencyRepositoryFiller.fillRepository(currencyRepository, BASE_DATE, USD_CURRENCY_NAME);
     }
 
     @AfterEach

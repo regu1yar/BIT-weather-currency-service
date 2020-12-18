@@ -31,7 +31,7 @@ public class RegressionPredictModel implements PredictModel {
             x[i] = createSample(
                     filledCurrencyDataset,
                     weatherDataset,
-                    new DateRange(windowStart, windowStart.plusDays(FEATURE_WINDOW_RANGE - 1))
+                    new DateRange(windowStart, windowStart.plusDays((long) FEATURE_WINDOW_RANGE - 1))
             ).stream().mapToDouble(Double::doubleValue).toArray();
 
             y[i] = filledCurrencyDataset.get(windowStart.plusDays(FEATURE_WINDOW_RANGE));
@@ -44,7 +44,7 @@ public class RegressionPredictModel implements PredictModel {
         double[] requestSample = createSample(
                 filledCurrencyDataset,
                 weatherDataset,
-                new DateRange(datasetRange.getEnd().minusDays(FEATURE_WINDOW_RANGE - 1), datasetRange.getEnd())
+                new DateRange(datasetRange.getEnd().minusDays((long) FEATURE_WINDOW_RANGE - 1), datasetRange.getEnd())
         ).stream().mapToDouble(Double::doubleValue).toArray();
 
         double[] regressionParameters = regression.estimateRegressionParameters();

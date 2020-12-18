@@ -67,6 +67,15 @@ class WeatherTest {
         assertEquals(7.3, weatherData.getVisibility(), 1e9);
     }
 
+    @Test
+    void toStringContainsLocationAndDate() {
+        String weatherString = weatherData.toString();
+        assertTrue(weatherString.contains(String.valueOf(SAMPLE_DATE.getYear())));
+        assertTrue(weatherString.contains(String.valueOf(SAMPLE_DATE.getMonthValue())));
+        assertTrue(weatherString.contains(String.valueOf(SAMPLE_DATE.getDayOfMonth())));
+        assertTrue(weatherString.contains(SAMPLE_LOCATION));
+    }
+
     private String readFromInputStream(InputStream inputStream)
             throws IOException {
         StringBuilder resultStringBuilder = new StringBuilder();

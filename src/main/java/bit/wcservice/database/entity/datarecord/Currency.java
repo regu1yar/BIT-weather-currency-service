@@ -48,7 +48,7 @@ public class Currency implements DataRecord {
     @Override
     public List<Double> extractFeatures() {
         List<Double> tmpList = new ArrayList<>();
-        tmpList.add(Double.parseDouble(currencyValue));
+        tmpList.add(Double.parseDouble(currencyValue.replaceAll(",", ".")));
         return tmpList;
     }
 }

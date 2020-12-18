@@ -4,12 +4,16 @@ import bit.wcservice.database.entity.datarecord.Weather;
 import bit.wcservice.util.datarange.DateRange;
 import bit.wcservice.web.service.WeatherWebService;
 import bit.wcservice.web.service.HistoryFormatter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
 import java.util.Map;
 import java.util.Optional;
 
 public class WeatherWebServiceImpl implements WeatherWebService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(WeatherWebServiceImpl.class);
+
     private final LocationDispatcher locationDispatcher;
     private final HistoryFormatter<Weather> historyFormatter;
 
@@ -27,7 +31,7 @@ public class WeatherWebServiceImpl implements WeatherWebService {
                 return loadedData.get().toString();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage());
             return e.getMessage();
         }
     }
@@ -40,7 +44,7 @@ public class WeatherWebServiceImpl implements WeatherWebService {
         try {
             history = locationDispatcher.getLoaderByLocation(location).loadRangeData(new DateRange(startDate, endDate));
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage());
             return e.getMessage();
         }
 

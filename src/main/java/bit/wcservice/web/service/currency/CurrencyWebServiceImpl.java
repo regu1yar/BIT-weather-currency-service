@@ -5,12 +5,16 @@ import bit.wcservice.util.datarange.DateRange;
 import bit.wcservice.web.service.CurrencyWebService;
 import bit.wcservice.web.service.HistoryLoader;
 import bit.wcservice.web.service.HistoryFormatter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
 import java.util.Map;
 import java.util.Optional;
 
 public class CurrencyWebServiceImpl implements CurrencyWebService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CurrencyWebServiceImpl.class);
+
     private final HistoryLoader<Currency> usdHistoryLoader;
     private final HistoryFormatter<Currency> historyFormatter;
 
@@ -29,7 +33,7 @@ public class CurrencyWebServiceImpl implements CurrencyWebService {
                 return loadedData.get().toString();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage());
             return e.getMessage();
         }
     }
@@ -43,7 +47,7 @@ public class CurrencyWebServiceImpl implements CurrencyWebService {
         try {
             history = usdHistoryLoader.loadRangeData(new DateRange(startDate, endDate));
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage());
             return e.getMessage();
         }
 
