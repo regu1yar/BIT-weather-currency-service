@@ -53,21 +53,6 @@ public class DateRange implements Iterable<LocalDate> {
         return other == null || (end.isBefore(other.start) || start.isAfter(other.end));
     }
 
-    public DateRange cross(DateRange other) {
-        if (other == null) {
-            return null;
-        }
-
-        if (notOverlaps(other)) {
-            return null;
-        }
-
-        return new DateRange(
-                start.isBefore(other.start) ? other.start : start,
-                end.isAfter(other.end) ? other.end : end
-        );
-    }
-
     public DateRange unionToRange(DateRange other) {
         if (notOverlaps(other)) {
             return null;
@@ -85,25 +70,6 @@ public class DateRange implements Iterable<LocalDate> {
 
     public boolean contains(LocalDate date) {
         return date != null && !start.isAfter(date) && !end.isBefore(date);
-    }
-
-    public List<DateRange> subtract(DateRange other) {
-        List<DateRange> subtraction = new ArrayList<>();
-
-        if (notOverlaps(other)) {
-            subtraction.add(this);
-            return subtraction;
-        }
-
-        if (start.isBefore(other.start)) {
-            subtraction.add(new DateRange(start, other.start.minusDays(1)));
-        }
-
-        if (end.isAfter(other.end)) {
-            subtraction.add(new DateRange(other.end.plusDays(1), end));
-        }
-
-        return subtraction;
     }
 
     public static DateRange leastCoveringRange(List<DateRange> ranges) {

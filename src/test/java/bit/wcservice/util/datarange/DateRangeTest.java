@@ -4,9 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -248,5 +246,25 @@ class DateRangeTest {
                 .collect(Collectors.toList());
 
         assertEquals(rangeLength + 1, dateRange.size());
+    }
+
+    @Test
+    void testCoveringRange() {
+        LocalDate today = LocalDate.now();
+        Set<LocalDate> datesSet = new HashSet<>();
+        datesSet.add(today);
+        datesSet.add(today.minusDays(3));
+        datesSet.add(today.plusDays(4));
+        DateRange coveringRange = DateRange.coveringRange(datesSet);
+
+        DateRange correctRange = new DateRange(today.minusDays(3), today.plusDays(4));
+
+        for (LocalDate date : correctRange) {
+            coveringRange.contains(date);
+        }
+
+        for (LocalDate date : coveringRange) {
+            correctRange.contains(date);
+        }
     }
 }
