@@ -23,7 +23,7 @@ public class RecordHistoryFormatter<T> implements HistoryFormatter<T> {
             }
 
             stringBuilder
-                    .append(date.format(DateTimeFormatter.ofPattern("dd/MM/yyy"))).append(": ")
+                    .append(date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))).append(": ")
                     .append(history.get(date).toString()).append('\n');
         }
 

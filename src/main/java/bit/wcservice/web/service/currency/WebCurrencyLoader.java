@@ -18,8 +18,7 @@ import java.util.stream.IntStream;
 import java.util.stream.StreamSupport;
 
 public class WebCurrencyLoader implements HistoryLoader<Currency> {
-    private static final String BASE_URL = "http://www.cbr.ru";
-    private static final WebLoader WEB_DATA_LOADER = new WebLoader(BASE_URL);
+    private final WebLoader webDataLoader;
 
     private static final String CURRENCY_CODES_PATH = "/scripts/XML_val.asp";
 
@@ -35,6 +34,10 @@ public class WebCurrencyLoader implements HistoryLoader<Currency> {
     private static final String USD_CURRENCY_NAME = "US Dollar";
 
     private String lastUSDCode = "R01235";
+
+    public WebCurrencyLoader(WebLoader webDataLoader) {
+        this.webDataLoader = webDataLoader;
+    }
 
     @Override
     public Optional<Currency> loadDailyData(LocalDate date) throws XmlException {
@@ -53,7 +56,7 @@ public class WebCurrencyLoader implements HistoryLoader<Currency> {
     }
 
     private void loadCurrencyCode() throws XmlException {
-        String xmlResponse = WEB_DATA_LOADER.loadData(CURRENCY_CODES_PATH, CURRENCY_CODES_QUERY_ARGUMENTS);
+        String xmlResponse = webDataLoader.loadData(CURRENCY_CODES_PATH, CURRENCY_CODES_QUERY_ARGUMENTS);
         ValutaDocument.Valuta currencyCodesList = ValutaDocument.Factory.parse(xmlResponse).getValuta();
         for (ValutaDocument.Valuta.Item currency : currencyCodesList.getItemArray()) {
             if (currency.getEngName().equals(USD_CURRENCY_NAME)) {
@@ -68,7 +71,7 @@ public class WebCurrencyLoader implements HistoryLoader<Currency> {
         queryArguments.add(RANGE_END_QUERY_PARAMETER_NAME, range.getEnd().format(REQUEST_DATE_FORMATTER));
         queryArguments.add(CURRENCY_CODE_QUERY_PARAMETER_NAME, lastUSDCode);
 
-        String xmlResponse = WEB_DATA_LOADER.loadData(CURRENCY_VALUES_PATH, queryArguments);
+        String xmlResponse = webDataLoader.loadData(CURRENCY_VALUES_PATH, queryArguments);
         ValCursDocument.ValCurs currency = ValCursDocument.Factory.parse(xmlResponse).getValCurs();
         ValCursDocument.ValCurs.Record[] currencyValues = currency.getRecordArray();
 

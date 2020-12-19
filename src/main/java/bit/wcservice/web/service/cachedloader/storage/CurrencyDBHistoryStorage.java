@@ -12,8 +12,11 @@ import java.util.Map;
 
 @Service
 public class CurrencyDBHistoryStorage implements HistoryStorage<Currency> {
-    @Autowired
-    private CurrencyService currencyService;
+    private final CurrencyService currencyService;
+
+    public CurrencyDBHistoryStorage(CurrencyService currencyService) {
+        this.currencyService = currencyService;
+    }
 
     @Override
     public boolean isEmpty(LocalDate date) {

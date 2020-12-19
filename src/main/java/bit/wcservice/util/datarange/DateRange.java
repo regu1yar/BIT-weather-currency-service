@@ -24,6 +24,19 @@ public class DateRange implements Iterable<LocalDate> {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DateRange that = (DateRange) o;
+        return start.equals(that.start) && end.equals(that.end);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(start, end);
+    }
+
+    @Override
     public String toString() {
         return start.format(DATE_FORMATTER) + " - " + end.format(DATE_FORMATTER);
     }

@@ -1,6 +1,8 @@
 package bit.wcservice;
 
 import bit.wcservice.database.entity.datarecord.Currency;
+import bit.wcservice.database.service.CurrencyService;
+import bit.wcservice.util.WebLoader;
 import bit.wcservice.web.service.CurrencyWebService;
 import bit.wcservice.web.service.WeatherWebService;
 import bit.wcservice.web.service.cachedloader.HistoryStorage;
@@ -24,14 +26,26 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ApplicationConfiguration {
     @Bean
-    public HistoryStorage<Currency> currencyHistoryStorage() {
-        return new CurrencyDBHistoryStorage();
+    @Autowired
+    public HistoryStorage<Currency> currencyHistoryStorage(CurrencyService currencyService) {
+        return new CurrencyDBHistoryStorage(currencyService);
+    }
+
+    @Bean
+    public String currencyWebLoaderBaseURL() {
+        return "http://www.cbr.ru";
+    }
+
+    @Bean
+    public String weatherWebLoaderBaseURL() {
+        return "http://api.weatherapi.com/v1";
     }
 
     @Bean
     @Autowired
-    public HistoryLoader<Currency> usdHistoryLoader(HistoryStorage<Currency> currencyHistoryStorage) {
-        return new CachedHistoryLoader<>(new WebCurrencyLoader(), currencyHistoryStorage);
+    public HistoryLoader<Currency> usdHistoryLoader(HistoryStorage<Currency> currencyHistoryStorage,
+                                                    String currencyWebLoaderBaseURL) {
+        return new CachedHistoryLoader<>(new WebCurrencyLoader(new WebLoader(currencyWebLoaderBaseURL)), currencyHistoryStorage);
     }
 
     @Bean
@@ -41,8 +55,9 @@ public class ApplicationConfiguration {
 
     @Bean
     @Autowired
-    public LocationDispatcher locationDispatcher(WeatherStorageFactory weatherStorageFactory) {
-        return new LocationDispatcher(weatherStorageFactory);
+    public LocationDispatcher locationDispatcher(WeatherStorageFactory weatherStorageFactory,
+                                                 String weatherWebLoaderBaseURL) {
+        return new LocationDispatcher(weatherWebLoaderBaseURL, weatherStorageFactory);
     }
 
     @Bean

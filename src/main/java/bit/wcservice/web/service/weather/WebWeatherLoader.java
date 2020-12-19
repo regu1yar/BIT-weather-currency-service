@@ -20,8 +20,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class WebWeatherLoader implements HistoryLoader<Weather> {
-    private static final String BASE_URL = "http://api.weatherapi.com/v1";
-    private static final WebLoader WEB_DATA_LOADER = new WebLoader(BASE_URL);
+    private final WebLoader webDataLoader;
 
     private static final String HISTORY_PATH = "/history.xml";
 
@@ -36,7 +35,8 @@ public class WebWeatherLoader implements HistoryLoader<Weather> {
 
     private final String location;
 
-    public WebWeatherLoader(String location) {
+    public WebWeatherLoader(WebLoader webDataLoader, String location) {
+        this.webDataLoader = webDataLoader;
         this.location = location;
     }
 
@@ -58,7 +58,7 @@ public class WebWeatherLoader implements HistoryLoader<Weather> {
         queryArguments.add(LOCATION_PARAMETER_NAME, location);
         queryArguments.add(API_KEY_PARAMETER_NAME, API_KEY);
 
-        String xmlResponse = WEB_DATA_LOADER.loadData(HISTORY_PATH, queryArguments);
+        String xmlResponse = webDataLoader.loadData(HISTORY_PATH, queryArguments);
         RootDocument.Root weather = RootDocument.Factory.parse(xmlResponse).getRoot();
         Forecastday[] weatherHistory = weather.getForecast().getForecastdayArray();
         String locationString = weather.getLocation().getName() + ", " + weather.getLocation().getCountry();
