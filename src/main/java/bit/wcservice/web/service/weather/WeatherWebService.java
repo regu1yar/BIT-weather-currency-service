@@ -1,4 +1,4 @@
-package bit.wcservice.web.service;
+package bit.wcservice.web.service.weather;
 
 public interface WeatherWebService {
     String loadCurrentWeatherIn(String location);

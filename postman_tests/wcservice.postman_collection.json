@@ -1,0 +1,296 @@
+{
+	"info": {
+		"_postman_id": "d4de2810-dc4f-4656-8b3c-2f2957c13296",
+		"name": "wcservice",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "default_currency_request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e5b68317-b9cf-49ef-825d-bc80f2c42026",
+						"exec": [
+							"function getCurrentDate() {",
+							"    var today = new Date();",
+							"    var dd = String(today.getDate()).padStart(2, '0');",
+							"    var mm = String(today.getMonth() + 1).padStart(2, '0');",
+							"    var yyyy = today.getFullYear();",
+							"    return yyyy + '-' + mm + '-' + dd;",
+							"}",
+							"",
+							"pm.test(\"Status code is not error\", function () {",
+							"    pm.expect(pm.response.code).to.be.lessThan(400);",
+							"});",
+							"",
+							"pm.test(\"Body contains one of desired strings\", function () {",
+							"    pm.expect(pm.response.text().includes(\"US Dollar value on \" + getCurrentDate()) || pm.response.text().includes(\"No current data available\")).to.be.true;",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOSTNAME}}:{{PORT}}/currency",
+					"host": [
+						"{{HOSTNAME}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"currency"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "range_currency_request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6a8cd1d3-4b16-4852-a8fd-461216555865",
+						"exec": [
+							"pm.test(\"Status code is not error\", function () {",
+							"    pm.expect(pm.response.code).to.be.lessThan(400);",
+							"});",
+							"",
+							"pm.test(\"Response records number is less or equal to range query parameter\", function () {",
+							"    pm.expect((pm.response.text().match(/US Dollar value on/g) || []).length).not.to.be.greaterThan(Number.parseInt(pm.variables.get(\"CURRENCY_RANGE_TEST\")));",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOSTNAME}}:{{PORT}}/currency?range={{CURRENCY_RANGE_TEST}}",
+					"host": [
+						"{{HOSTNAME}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"currency"
+					],
+					"query": [
+						{
+							"key": "range",
+							"value": "{{CURRENCY_RANGE_TEST}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "default_weather_request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "358a570d-fab7-4610-a2c7-89a1aff2ca5f",
+						"exec": [
+							"function getCurrentDate() {",
+							"    var today = new Date();",
+							"    var dd = String(today.getDate()).padStart(2, '0');",
+							"    var mm = String(today.getMonth() + 1).padStart(2, '0');",
+							"    var yyyy = today.getFullYear();",
+							"    return yyyy + '-' + mm + '-' + dd;",
+							"}",
+							"",
+							"pm.test(\"Status code is not error\", function () {",
+							"    pm.expect(pm.response.code).to.be.lessThan(400);",
+							"});",
+							"",
+							"pm.test(\"Body contains current date\", function () {",
+							"    pm.expect(pm.response.text()).to.include(getCurrentDate());",
+							"});",
+							"",
+							"pm.test(\"Body contains default city\", function () {",
+							"    pm.expect(pm.response.text()).to.include(pm.variables.get(\"WEATHER_DEFAULT_CITY\"));",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOSTNAME}}:{{PORT}}/weather",
+					"host": [
+						"{{HOSTNAME}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"weather"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "range_weather_request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d61d6344-912f-41c0-9b75-dd6183a6c848",
+						"exec": [
+							"function getDayBeforeToday(day_diff) {",
+							"    var today = new Date();",
+							"    today.setDate(today.getDate() - day_diff);",
+							"    var dd = String(today.getDate()).padStart(2, '0');",
+							"    var mm = String(today.getMonth() + 1).padStart(2, '0');",
+							"    var yyyy = today.getFullYear();",
+							"    return yyyy + '-' + mm + '-' + dd;",
+							"}",
+							"",
+							"pm.test(\"Status code is not error\", function () {",
+							"    pm.expect(pm.response.code).to.be.lessThan(400);",
+							"});",
+							"",
+							"pm.test(\"Body contains all range dates\", function () {",
+							"    for (day_diff = 0; day_diff < pm.variables.get(\"WEATHER_RANGE_TEST\"); day_diff++) {",
+							"        pm.expect(pm.response.text()).to.include(getDayBeforeToday(day_diff));",
+							"    }",
+							"});",
+							"",
+							"pm.test(\"Body contains default city\", function () {",
+							"    pm.expect(pm.response.text()).to.include(pm.variables.get(\"WEATHER_DEFAULT_CITY\"));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOSTNAME}}:{{PORT}}/weather?range={{WEATHER_RANGE_TES}}",
+					"host": [
+						"{{HOSTNAME}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"weather"
+					],
+					"query": [
+						{
+							"key": "range",
+							"value": "{{WEATHER_RANGE_TES}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "city_weather_request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2049d8c1-8c76-4e6f-b465-93fff7c4e85e",
+						"exec": [
+							"function getCurrentDate() {",
+							"    var today = new Date();",
+							"    var dd = String(today.getDate()).padStart(2, '0');",
+							"    var mm = String(today.getMonth() + 1).padStart(2, '0');",
+							"    var yyyy = today.getFullYear();",
+							"    return yyyy + '-' + mm + '-' + dd;",
+							"}",
+							"",
+							"pm.test(\"Status code is not error\", function () {",
+							"    pm.expect(pm.response.code).to.be.lessThan(400);",
+							"});",
+							"",
+							"pm.test(\"Body contains current date\", function () {",
+							"    pm.expect(pm.response.text()).to.include(getCurrentDate());",
+							"});",
+							"",
+							"pm.test(\"Body contains requested city\", function () {",
+							"    pm.expect(pm.response.text()).to.include(pm.variables.get(\"WEATHER_CITY_TEST\"));",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOSTNAME}}:{{PORT}}/weather?city={{WEATHER_CITY_TEST}}",
+					"host": [
+						"{{HOSTNAME}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"weather"
+					],
+					"query": [
+						{
+							"key": "city",
+							"value": "{{WEATHER_CITY_TEST}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "predict_request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8c092bb8-066f-46a7-b4a1-ff77cd7900ee",
+						"exec": [
+							"pm.test(\"Status code is not error\", function () {",
+							"    pm.expect(pm.response.code).to.be.lessThan(400);",
+							"});",
+							"",
+							"pm.test(\"Response body contains float number\", function () {",
+							"    pm.expect(pm.response.text()).to.match(/\\d+\\.\\d+/)",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOSTNAME}}:{{PORT}}/predict",
+					"host": [
+						"{{HOSTNAME}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"predict"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

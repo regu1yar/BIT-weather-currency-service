@@ -1,10 +1,10 @@
 package bit.wcservice.web.service.weather;
 
 import bit.wcservice.database.entity.datarecord.Weather;
-import bit.wcservice.util.datarange.DateRange;
+import bit.wcservice.utils.datarange.DateRange;
 import bit.wcservice.web.service.HistoryFormatter;
 import bit.wcservice.web.service.HistoryLoader;
-import bit.wcservice.web.service.WeatherWebService;
+import bit.wcservice.web.service.weather.impl.WeatherWebServiceImpl;
 import org.apache.xmlbeans.XmlException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;

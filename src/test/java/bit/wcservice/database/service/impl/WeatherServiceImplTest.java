@@ -5,7 +5,7 @@ import bit.wcservice.database.WeatherSampleFactoryImpl;
 import bit.wcservice.database.entity.datarecord.Weather;
 import bit.wcservice.database.repository.WeatherRepository;
 import bit.wcservice.database.service.WeatherService;
-import bit.wcservice.util.datarange.DateRange;
+import bit.wcservice.utils.datarange.DateRange;
 import org.apache.xmlbeans.XmlException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

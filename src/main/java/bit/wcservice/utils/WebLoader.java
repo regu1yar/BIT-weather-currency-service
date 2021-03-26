@@ -1,4 +1,4 @@
-package bit.wcservice.util;
+package bit.wcservice.utils;
 
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;

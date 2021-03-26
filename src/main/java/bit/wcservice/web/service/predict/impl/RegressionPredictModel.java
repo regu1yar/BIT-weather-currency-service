@@ -1,6 +1,7 @@
-package bit.wcservice.web.service.predict;
+package bit.wcservice.web.service.predict.impl;
 
-import bit.wcservice.util.datarange.DateRange;
+import bit.wcservice.utils.datarange.DateRange;
+import bit.wcservice.web.service.predict.PredictModel;
 import org.apache.commons.math3.stat.regression.OLSMultipleLinearRegression;
 
 import java.time.LocalDate;

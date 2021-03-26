@@ -1,6 +1,6 @@
 package bit.wcservice.web.service.cachedloader.storage;
 
-import bit.wcservice.util.datarange.DateRange;
+import bit.wcservice.utils.datarange.DateRange;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

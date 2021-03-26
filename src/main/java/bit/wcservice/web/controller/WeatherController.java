@@ -1,6 +1,6 @@
 package bit.wcservice.web.controller;
 
-import bit.wcservice.web.service.WeatherWebService;
+import bit.wcservice.web.service.weather.WeatherWebService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

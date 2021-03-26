@@ -1,6 +1,6 @@
 package bit.wcservice.web.controller;
 
-import bit.wcservice.web.service.CurrencyWebService;
+import bit.wcservice.web.service.currency.CurrencyWebService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

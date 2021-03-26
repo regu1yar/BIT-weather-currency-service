@@ -1,6 +1,6 @@
 package bit.wcservice.web.controller;
 
-import bit.wcservice.web.service.CurrencyWebService;
+import bit.wcservice.web.service.currency.CurrencyWebService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;

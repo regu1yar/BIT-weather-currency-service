@@ -1,4 +1,4 @@
-package bit.wcservice.util.datarange;
+package bit.wcservice.utils.datarange;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

@@ -2,10 +2,11 @@ package bit.wcservice.web.service.predict;
 
 import bit.wcservice.database.entity.datarecord.Currency;
 import bit.wcservice.database.entity.datarecord.Weather;
-import bit.wcservice.util.datarange.DateRange;
-import bit.wcservice.web.service.HistoryLoader;
-import bit.wcservice.web.service.PredictWebService;
-import bit.wcservice.web.service.weather.LocationDispatcher;
+import bit.wcservice.utils.datarange.DateRange;
+import bit.wcservice.web.service.predict.api.APICurrencyLoader;
+import bit.wcservice.web.service.predict.api.APIWeatherLoader;
+import bit.wcservice.web.service.predict.impl.PredictWebServiceImpl;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.xmlbeans.XmlException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Map;
@@ -26,13 +28,10 @@ import static org.mockito.Mockito.*;
 class PredictWebServiceImplTest {
 
     @Mock
-    private HistoryLoader<Currency> currencyLoader;
+    private APICurrencyLoader apiCurrencyLoader;
 
     @Mock
-    private HistoryLoader<Weather> weatherLoader;
-
-    @Mock
-    private LocationDispatcher weatherLocationDispatcher;
+    private APIWeatherLoader apiWeatherLoader;
 
     @Mock
     private PredictModel predictModel;
@@ -42,11 +41,11 @@ class PredictWebServiceImplTest {
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        predictWebService = new PredictWebServiceImpl(currencyLoader, weatherLocationDispatcher, predictModel);
+        predictWebService = new PredictWebServiceImpl(apiCurrencyLoader, apiWeatherLoader, predictModel);
     }
 
     @Test
-    public void successfullyPredict() throws XmlException {
+    public void successfullyPredict() throws JsonProcessingException {
         LocalDate today = LocalDate.now();
         Currency currency = new Currency(today, "77.0", "USD");
         Weather weather = new Weather();
@@ -56,25 +55,15 @@ class PredictWebServiceImplTest {
         Map<LocalDate, Currency> currencyMap = Collections.singletonMap(today, currency);
         Map<LocalDate, Weather> weatherMap = Collections.singletonMap(today.minusDays(1), weather);
 
-        when(currencyLoader.loadRangeData(any(DateRange.class))).thenReturn(currencyMap);
-        when(weatherLocationDispatcher.getLoaderByLocation(anyString())).thenReturn(weatherLoader);
-        when(weatherLoader.loadRangeData(any(DateRange.class))).thenReturn(weatherMap);
+        when(apiCurrencyLoader.loadRangeData(any(DateRange.class))).thenReturn(currencyMap);
+        when(apiWeatherLoader.loadRangeData(any(DateRange.class), anyString())).thenReturn(weatherMap);
         when(predictModel.predict(anyMap(), anyMap())).thenReturn(Double.valueOf(42));
 
         String predictResult = predictWebService.predict();
 
         assertEquals(String.valueOf(Double.valueOf(42)), predictResult);
-        verify(currencyLoader, times(1)).loadRangeData(any(DateRange.class));
-        verify(weatherLocationDispatcher, times(1)).getLoaderByLocation(anyString());
-        verify(weatherLoader, times(1)).loadRangeData(any(DateRange.class));
+        verify(apiCurrencyLoader, times(1)).loadRangeData(any(DateRange.class));
+        verify(apiWeatherLoader, times(1)).loadRangeData(any(DateRange.class), anyString());
         verify(predictModel, times(1)).predict(anyMap(), anyMap());
-    }
-
-    @Test
-    void exceptionIsThrownWhilePredicting() throws XmlException {
-        when(currencyLoader.loadRangeData(any(DateRange.class))).thenThrow(new XmlException("exception"));
-        String predictResult = predictWebService.predict();
-        assertEquals("exception", predictResult);
-        verify(currencyLoader, times(1)).loadRangeData(any(DateRange.class));
     }
 }

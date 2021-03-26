@@ -1,7 +1,6 @@
 package bit.wcservice.web.service.cachedloader;
 
-import bit.wcservice.database.entity.DataRecord;
-import bit.wcservice.util.datarange.DateRange;
+import bit.wcservice.utils.datarange.DateRange;
 import bit.wcservice.web.service.HistoryLoader;
 import org.apache.xmlbeans.XmlException;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,6 +1,6 @@
 package bit.wcservice.web.service.formatter;
 
-import bit.wcservice.util.datarange.DateRange;
+import bit.wcservice.utils.datarange.DateRange;
 import bit.wcservice.web.service.HistoryFormatter;
 
 import java.time.LocalDate;

@@ -1,5 +1,6 @@
 package bit.wcservice.web.service.predict;
 
+import bit.wcservice.web.service.predict.impl.RegressionPredictModel;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;

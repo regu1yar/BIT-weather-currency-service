@@ -1,8 +1,8 @@
 package bit.wcservice.web.service.currency;
 
-import bit.wcservice.util.datarange.DateRange;
+import bit.wcservice.utils.datarange.DateRange;
 import bit.wcservice.web.service.HistoryLoader;
-import bit.wcservice.util.WebLoader;
+import bit.wcservice.utils.WebLoader;
 import bit.wcservice.database.entity.datarecord.Currency;
 import noNamespace.ValCursDocument;
 import noNamespace.ValutaDocument;

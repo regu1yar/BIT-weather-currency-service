@@ -1,4 +1,4 @@
-package bit.wcservice.util.datarange;
+package bit.wcservice.utils.datarange;
 
 import org.junit.jupiter.api.Test;
 

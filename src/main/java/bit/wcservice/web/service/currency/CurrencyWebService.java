@@ -1,4 +1,4 @@
-package bit.wcservice.web.service;
+package bit.wcservice.web.service.currency;
 
 public interface CurrencyWebService {
     String loadCurrentUSDValue();

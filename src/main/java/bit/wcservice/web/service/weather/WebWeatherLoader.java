@@ -1,8 +1,8 @@
 package bit.wcservice.web.service.weather;
 
-import bit.wcservice.util.datarange.DateRange;
+import bit.wcservice.utils.datarange.DateRange;
 import bit.wcservice.web.service.HistoryLoader;
-import bit.wcservice.util.WebLoader;
+import bit.wcservice.utils.WebLoader;
 import bit.wcservice.database.entity.datarecord.Weather;
 import noNamespace.RootDocument;
 import noNamespace.RootDocument.Root.Forecast.Forecastday;

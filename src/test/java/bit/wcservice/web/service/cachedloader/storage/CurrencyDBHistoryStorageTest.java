@@ -2,7 +2,7 @@ package bit.wcservice.web.service.cachedloader.storage;
 
 import bit.wcservice.database.entity.datarecord.Currency;
 import bit.wcservice.database.service.CurrencyService;
-import bit.wcservice.util.datarange.DateRange;
+import bit.wcservice.utils.datarange.DateRange;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;

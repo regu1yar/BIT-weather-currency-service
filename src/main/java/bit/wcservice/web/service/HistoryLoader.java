@@ -1,6 +1,6 @@
 package bit.wcservice.web.service;
 
-import bit.wcservice.util.datarange.DateRange;
+import bit.wcservice.utils.datarange.DateRange;
 import org.apache.xmlbeans.XmlException;
 
 import java.time.LocalDate;

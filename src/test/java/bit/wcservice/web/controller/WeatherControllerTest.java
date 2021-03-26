@@ -1,6 +1,6 @@
 package bit.wcservice.web.controller;
 
-import bit.wcservice.web.service.WeatherWebService;
+import bit.wcservice.web.service.weather.WeatherWebService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;

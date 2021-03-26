@@ -1,7 +1,7 @@
 package bit.wcservice.web.service.weather;
 
 import bit.wcservice.database.entity.datarecord.Weather;
-import bit.wcservice.util.WebLoader;
+import bit.wcservice.utils.WebLoader;
 import bit.wcservice.web.service.cachedloader.CachedHistoryLoader;
 import bit.wcservice.web.service.HistoryLoader;
 
