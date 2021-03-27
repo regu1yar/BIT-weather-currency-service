@@ -1,8 +1,8 @@
 package bit.wcservice.web.service.predict.impl;
 
-import bit.wcservice.database.entity.datarecord.Currency;
-import bit.wcservice.database.entity.datarecord.Weather;
-import bit.wcservice.utils.datarange.DateRange;
+import bit.utils.database.entity.datarecord.Currency;
+import bit.utils.database.entity.datarecord.Weather;
+import bit.utils.datarange.DateRange;
 import bit.wcservice.web.service.predict.PredictModel;
 import bit.wcservice.web.service.predict.PredictWebService;
 import bit.wcservice.web.service.predict.api.APICurrencyLoader;

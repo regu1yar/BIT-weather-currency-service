@@ -1,13 +1,12 @@
 package bit.wcservice.web.service.predict;
 
-import bit.wcservice.database.entity.datarecord.Currency;
-import bit.wcservice.database.entity.datarecord.Weather;
-import bit.wcservice.utils.datarange.DateRange;
+import bit.utils.database.entity.datarecord.Currency;
+import bit.utils.database.entity.datarecord.Weather;
+import bit.utils.datarange.DateRange;
 import bit.wcservice.web.service.predict.api.APICurrencyLoader;
 import bit.wcservice.web.service.predict.api.APIWeatherLoader;
 import bit.wcservice.web.service.predict.impl.PredictWebServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import org.apache.xmlbeans.XmlException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
@@ -15,7 +14,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Map;

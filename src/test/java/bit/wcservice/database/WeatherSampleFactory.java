@@ -1,6 +1,6 @@
 package bit.wcservice.database;
 
-import bit.wcservice.database.entity.datarecord.Weather;
+import bit.utils.database.entity.datarecord.Weather;
 import org.apache.xmlbeans.XmlException;
 
 import java.io.IOException;

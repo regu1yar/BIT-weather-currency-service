@@ -1,6 +1,6 @@
 package bit.wcservice.database.repository;
 
-import bit.wcservice.database.entity.datarecord.Weather;
+import bit.utils.database.entity.datarecord.Weather;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

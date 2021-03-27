@@ -1,8 +1,8 @@
 package bit.wcservice.web.service.predict.api.impl;
 
-import bit.wcservice.database.entity.datarecord.Weather;
-import bit.wcservice.utils.WebLoader;
-import bit.wcservice.utils.datarange.DateRange;
+import bit.utils.database.entity.datarecord.Weather;
+import bit.utils.WebLoader;
+import bit.utils.datarange.DateRange;
 import bit.wcservice.web.service.predict.api.APIWeatherLoader;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;

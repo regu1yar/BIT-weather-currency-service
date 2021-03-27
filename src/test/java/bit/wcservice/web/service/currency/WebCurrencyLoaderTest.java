@@ -1,10 +1,10 @@
 package bit.wcservice.web.service.currency;
 
-import bit.wcservice.ResourceFileReader;
-import bit.wcservice.ResourceFileReaderImpl;
-import bit.wcservice.database.entity.datarecord.Currency;
-import bit.wcservice.utils.WebLoader;
-import bit.wcservice.utils.datarange.DateRange;
+import bit.utils.help.ResourceFileReader;
+import bit.utils.help.ResourceFileReaderImpl;
+import bit.utils.database.entity.datarecord.Currency;
+import bit.utils.WebLoader;
+import bit.utils.datarange.DateRange;
 import org.apache.xmlbeans.XmlException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

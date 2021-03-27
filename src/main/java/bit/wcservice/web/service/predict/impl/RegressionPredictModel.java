@@ -1,6 +1,6 @@
 package bit.wcservice.web.service.predict.impl;
 
-import bit.wcservice.utils.datarange.DateRange;
+import bit.utils.datarange.DateRange;
 import bit.wcservice.web.service.predict.PredictModel;
 import org.apache.commons.math3.stat.regression.OLSMultipleLinearRegression;
 

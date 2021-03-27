@@ -1,6 +1,6 @@
 package bit.wcservice.database;
 
-import bit.wcservice.database.entity.datarecord.Currency;
+import bit.utils.database.entity.datarecord.Currency;
 import bit.wcservice.database.repository.CurrencyRepository;
 
 import java.time.LocalDate;

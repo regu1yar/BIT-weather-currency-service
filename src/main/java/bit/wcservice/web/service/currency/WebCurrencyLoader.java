@@ -1,9 +1,9 @@
 package bit.wcservice.web.service.currency;
 
-import bit.wcservice.utils.datarange.DateRange;
-import bit.wcservice.web.service.HistoryLoader;
-import bit.wcservice.utils.WebLoader;
-import bit.wcservice.database.entity.datarecord.Currency;
+import bit.utils.datarange.DateRange;
+import bit.utils.WebLoader;
+import bit.utils.database.entity.datarecord.Currency;
+import bit.utils.web.service.HistoryLoader;
 import noNamespace.ValCursDocument;
 import noNamespace.ValutaDocument;
 import org.apache.xmlbeans.XmlException;

@@ -1,7 +1,7 @@
 package bit.wcservice.web.service.weather.impl;
 
-import bit.wcservice.database.entity.datarecord.Weather;
-import bit.wcservice.utils.datarange.DateRange;
+import bit.utils.database.entity.datarecord.Weather;
+import bit.utils.datarange.DateRange;
 import bit.wcservice.web.service.currency.impl.CurrencyAPIServiceImpl;
 import bit.wcservice.web.service.weather.LocationDispatcher;
 import bit.wcservice.web.service.weather.WeatherAPIService;

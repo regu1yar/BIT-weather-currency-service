@@ -1,7 +1,7 @@
 package bit.wcservice.database.repository;
 
 import bit.wcservice.database.CurrencyRepositoryFiller;
-import bit.wcservice.database.entity.datarecord.Currency;
+import bit.utils.database.entity.datarecord.Currency;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

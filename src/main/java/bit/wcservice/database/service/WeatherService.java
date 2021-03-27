@@ -1,7 +1,7 @@
 package bit.wcservice.database.service;
 
-import bit.wcservice.database.entity.datarecord.Weather;
-import bit.wcservice.utils.datarange.DateRange;
+import bit.utils.database.entity.datarecord.Weather;
+import bit.utils.datarange.DateRange;
 
 import java.time.LocalDate;
 import java.util.Map;

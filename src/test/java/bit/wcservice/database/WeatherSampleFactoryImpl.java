@@ -1,8 +1,8 @@
 package bit.wcservice.database;
 
-import bit.wcservice.ResourceFileReader;
-import bit.wcservice.ResourceFileReaderImpl;
-import bit.wcservice.database.entity.datarecord.Weather;
+import bit.utils.database.entity.datarecord.Weather;
+import bit.utils.help.ResourceFileReader;
+import bit.utils.help.ResourceFileReaderImpl;
 import noNamespace.RootDocument;
 import org.apache.xmlbeans.XmlException;
 

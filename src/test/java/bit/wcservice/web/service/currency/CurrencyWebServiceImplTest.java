@@ -1,10 +1,10 @@
 package bit.wcservice.web.service.currency;
 
-import bit.wcservice.database.entity.datarecord.Currency;
-import bit.wcservice.utils.datarange.DateRange;
+import bit.utils.database.entity.datarecord.Currency;
+import bit.utils.datarange.DateRange;
+import bit.utils.web.service.HistoryFormatter;
+import bit.utils.web.service.HistoryLoader;
 import bit.wcservice.web.service.currency.impl.CurrencyWebServiceImpl;
-import bit.wcservice.web.service.HistoryFormatter;
-import bit.wcservice.web.service.HistoryLoader;
 import org.apache.xmlbeans.XmlException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;

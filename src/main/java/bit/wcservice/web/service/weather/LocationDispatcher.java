@@ -1,9 +1,9 @@
 package bit.wcservice.web.service.weather;
 
-import bit.wcservice.database.entity.datarecord.Weather;
-import bit.wcservice.utils.WebLoader;
-import bit.wcservice.web.service.cachedloader.CachedHistoryLoader;
-import bit.wcservice.web.service.HistoryLoader;
+import bit.utils.database.entity.datarecord.Weather;
+import bit.utils.WebLoader;
+import bit.utils.web.service.HistoryLoader;
+import bit.utils.web.service.cachedloader.CachedHistoryLoader;
 
 import java.util.HashMap;
 import java.util.Map;

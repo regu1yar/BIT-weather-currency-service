@@ -1,8 +1,8 @@
 package bit.wcservice.web.service.weather.impl;
 
-import bit.wcservice.database.entity.datarecord.Weather;
-import bit.wcservice.utils.datarange.DateRange;
-import bit.wcservice.web.service.HistoryFormatter;
+import bit.utils.database.entity.datarecord.Weather;
+import bit.utils.datarange.DateRange;
+import bit.utils.web.service.HistoryFormatter;
 import bit.wcservice.web.service.weather.LocationDispatcher;
 import bit.wcservice.web.service.weather.WeatherWebService;
 import org.slf4j.Logger;

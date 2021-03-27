@@ -1,9 +1,9 @@
 package bit.wcservice.web.service.cachedloader.storage;
 
-import bit.wcservice.database.entity.datarecord.Currency;
+import bit.utils.database.entity.datarecord.Currency;
 import bit.wcservice.database.service.CurrencyService;
-import bit.wcservice.utils.datarange.DateRange;
-import bit.wcservice.web.service.cachedloader.HistoryStorage;
+import bit.utils.datarange.DateRange;
+import bit.utils.web.service.cachedloader.HistoryStorage;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;

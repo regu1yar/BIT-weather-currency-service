@@ -1,10 +1,10 @@
 package bit.wcservice.web.service.currency.impl;
 
-import bit.wcservice.database.entity.datarecord.Currency;
-import bit.wcservice.utils.datarange.DateRange;
-import bit.wcservice.web.service.HistoryLoader;
+import bit.utils.database.entity.datarecord.Currency;
+import bit.utils.datarange.DateRange;
+import bit.utils.web.service.HistoryFormatter;
+import bit.utils.web.service.HistoryLoader;
 import bit.wcservice.web.service.currency.CurrencyWebService;
-import bit.wcservice.web.service.HistoryFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

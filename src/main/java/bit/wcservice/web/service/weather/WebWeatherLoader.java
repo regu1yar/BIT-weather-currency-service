@@ -1,9 +1,9 @@
 package bit.wcservice.web.service.weather;
 
-import bit.wcservice.utils.datarange.DateRange;
-import bit.wcservice.web.service.HistoryLoader;
-import bit.wcservice.utils.WebLoader;
-import bit.wcservice.database.entity.datarecord.Weather;
+import bit.utils.datarange.DateRange;
+import bit.utils.WebLoader;
+import bit.utils.database.entity.datarecord.Weather;
+import bit.utils.web.service.HistoryLoader;
 import noNamespace.RootDocument;
 import noNamespace.RootDocument.Root.Forecast.Forecastday;
 import org.springframework.util.LinkedMultiValueMap;

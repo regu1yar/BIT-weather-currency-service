@@ -11,7 +11,7 @@
     <groupId>bit</groupId>
     <artifactId>wcservice</artifactId>
     <version>1.0.0</version>
-<!--    <packaging>pom</packaging>-->
+    <packaging>pom</packaging>
     <name>wcservice</name>
     <description>Weather/currency info and prediction</description>
 
@@ -19,12 +19,12 @@
         <java.version>1.8</java.version>
     </properties>
 
-<!--    <modules>-->
-<!--        <module>utils</module>-->
-<!--        <module>weather</module>-->
-<!--        <module>currency</module>-->
-<!--        <module>predict</module>-->
-<!--    </modules>-->
+    <modules>
+        <module>utils</module>
+        <module>weather</module>
+        <module>currency</module>
+        <module>predict</module>
+    </modules>
 
     <dependencies>
         <dependency>
@@ -125,6 +125,12 @@
             <artifactId>jackson-datatype-jsr310</artifactId>
             <version>2.11.1</version>
         </dependency>
+        <dependency>
+            <groupId>bit</groupId>
+            <artifactId>utils</artifactId>
+            <version>1.0.0</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -142,24 +148,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>xmlbeans-maven-plugin</artifactId>
-                <version>2.3.3</version>
-                <executions>
-                    <execution>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>xmlbeans</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <javaSource>1.8</javaSource>
-                    <schemaDirectory>src/main/xsd</schemaDirectory>
-                </configuration>
             </plugin>
 
             <plugin>

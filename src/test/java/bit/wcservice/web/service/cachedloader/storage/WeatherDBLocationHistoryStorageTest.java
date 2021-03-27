@@ -1,8 +1,8 @@
 package bit.wcservice.web.service.cachedloader.storage;
 
-import bit.wcservice.database.entity.datarecord.Weather;
+import bit.utils.database.entity.datarecord.Weather;
 import bit.wcservice.database.service.WeatherService;
-import bit.wcservice.utils.datarange.DateRange;
+import bit.utils.datarange.DateRange;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
