@@ -7,6 +7,15 @@
     <version>1.0.0</version>
     <name>predict</name>
 
+    <dependencies>
+        <dependency>
+            <groupId>bit</groupId>
+            <artifactId>utils</artifactId>
+            <version>1.0.0</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+
     <parent>
         <groupId>bit</groupId>
         <artifactId>wcservice</artifactId>
@@ -26,7 +35,7 @@
                 <version>3.2.0</version>
                 <configuration>
                     <outputDirectory>
-                        ${basedir}/../commons
+                        ${basedir}/../services
                     </outputDirectory>
                 </configuration>
             </plugin>
@@ -34,6 +43,14 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <dependencies>
+                    <dependency>
+                        <groupId>bit</groupId>
+                        <artifactId>utils</artifactId>
+                        <version>1.0.0</version>
+                        <scope>compile</scope>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>

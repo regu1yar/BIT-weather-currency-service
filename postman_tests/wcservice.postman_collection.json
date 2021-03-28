@@ -11,7 +11,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "e5b68317-b9cf-49ef-825d-bc80f2c42026",
 						"exec": [
 							"function getCurrentDate() {",
 							"    var today = new Date();",
@@ -38,11 +37,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{HOSTNAME}}:{{PORT}}/currency",
+					"raw": "{{CURRENCY_HOSTNAME}}:{{CURRENCY_PORT}}/currency",
 					"host": [
-						"{{HOSTNAME}}"
+						"{{CURRENCY_HOSTNAME}}"
 					],
-					"port": "{{PORT}}",
+					"port": "{{CURRENCY_PORT}}",
 					"path": [
 						"currency"
 					]
@@ -56,7 +55,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "6a8cd1d3-4b16-4852-a8fd-461216555865",
 						"exec": [
 							"pm.test(\"Status code is not error\", function () {",
 							"    pm.expect(pm.response.code).to.be.lessThan(400);",
@@ -75,11 +73,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{HOSTNAME}}:{{PORT}}/currency?range={{CURRENCY_RANGE_TEST}}",
+					"raw": "{{CURRENCY_HOSTNAME}}:{{CURRENCY_PORT}}/currency?range={{CURRENCY_RANGE_TEST}}",
 					"host": [
-						"{{HOSTNAME}}"
+						"{{CURRENCY_HOSTNAME}}"
 					],
-					"port": "{{PORT}}",
+					"port": "{{CURRENCY_PORT}}",
 					"path": [
 						"currency"
 					],
@@ -99,7 +97,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "358a570d-fab7-4610-a2c7-89a1aff2ca5f",
 						"exec": [
 							"function getCurrentDate() {",
 							"    var today = new Date();",
@@ -130,11 +127,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{HOSTNAME}}:{{PORT}}/weather",
+					"raw": "{{WEATHER_HOSTNAME}}:{{WEATHER_PORT}}/weather",
 					"host": [
-						"{{HOSTNAME}}"
+						"{{WEATHER_HOSTNAME}}"
 					],
-					"port": "{{PORT}}",
+					"port": "{{WEATHER_PORT}}",
 					"path": [
 						"weather"
 					]
@@ -148,7 +145,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "d61d6344-912f-41c0-9b75-dd6183a6c848",
 						"exec": [
 							"function getDayBeforeToday(day_diff) {",
 							"    var today = new Date();",
@@ -181,11 +177,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{HOSTNAME}}:{{PORT}}/weather?range={{WEATHER_RANGE_TES}}",
+					"raw": "{{WEATHER_HOSTNAME}}:{{WEATHER_PORT}}/weather?range={{WEATHER_RANGE_TES}}",
 					"host": [
-						"{{HOSTNAME}}"
+						"{{WEATHER_HOSTNAME}}"
 					],
-					"port": "{{PORT}}",
+					"port": "{{WEATHER_PORT}}",
 					"path": [
 						"weather"
 					],
@@ -205,7 +201,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "2049d8c1-8c76-4e6f-b465-93fff7c4e85e",
 						"exec": [
 							"function getCurrentDate() {",
 							"    var today = new Date();",
@@ -236,11 +231,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{HOSTNAME}}:{{PORT}}/weather?city={{WEATHER_CITY_TEST}}",
+					"raw": "{{WEATHER_HOSTNAME}}:{{WEATHER_PORT}}/weather?city={{WEATHER_CITY_TEST}}",
 					"host": [
-						"{{HOSTNAME}}"
+						"{{WEATHER_HOSTNAME}}"
 					],
-					"port": "{{PORT}}",
+					"port": "{{WEATHER_PORT}}",
 					"path": [
 						"weather"
 					],
@@ -260,7 +255,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "8c092bb8-066f-46a7-b4a1-ff77cd7900ee",
 						"exec": [
 							"pm.test(\"Status code is not error\", function () {",
 							"    pm.expect(pm.response.code).to.be.lessThan(400);",
@@ -279,11 +273,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{HOSTNAME}}:{{PORT}}/predict",
+					"raw": "{{PREDICT_HOSTNAME}}:{{PREDICT_PORT}}/predict",
 					"host": [
-						"{{HOSTNAME}}"
+						"{{PREDICT_HOSTNAME}}"
 					],
-					"port": "{{PORT}}",
+					"port": "{{PREDICT_PORT}}",
 					"path": [
 						"predict"
 					]
@@ -291,6 +285,5 @@
 			},
 			"response": []
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }
