@@ -1,5 +1,6 @@
 package bit.weather.web.service.weather;
 
+import bit.utils.WebLoader;
 import bit.weather.web.service.LocationDispatcher;
 import bit.weather.web.service.storagefactory.WeatherStorageFactory;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,17 +15,18 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 class LocationDispatcherTest {
-    private static final String STUB_URL_STRING = "STUB_URL_STRING";
-
     @Mock
     private WeatherStorageFactory weatherStorageFactory;
+
+    @Mock
+    private WebLoader weatherWebLoader;
 
     private LocationDispatcher locationDispatcher;
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        locationDispatcher = new LocationDispatcher(STUB_URL_STRING, weatherStorageFactory);
+        locationDispatcher = new LocationDispatcher(weatherStorageFactory, weatherWebLoader);
     }
 
     @Test

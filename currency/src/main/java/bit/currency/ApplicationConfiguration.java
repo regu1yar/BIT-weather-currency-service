@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -58,9 +59,15 @@ public class ApplicationConfiguration {
 
     @Bean
     @Autowired
+    public WebClient currencyWebClient(String currencyWebLoaderBaseURL) {
+        return WebClient.create(currencyWebLoaderBaseURL);
+    }
+
+    @Bean
+    @Autowired
     public HistoryLoader<Currency> usdHistoryLoader(HistoryStorage<Currency> currencyHistoryStorage,
-                                                    String currencyWebLoaderBaseURL) {
-        return new CachedHistoryLoader<>(new WebCurrencyLoader(new WebLoader(currencyWebLoaderBaseURL)), currencyHistoryStorage);
+                                                    WebClient currencyWebClient) {
+        return new CachedHistoryLoader<>(new WebCurrencyLoader(new WebLoader(currencyWebClient)), currencyHistoryStorage);
     }
 
     @Bean

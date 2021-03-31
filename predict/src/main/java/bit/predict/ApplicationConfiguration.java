@@ -16,13 +16,17 @@ import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @Configuration
+@EnableEurekaClient
 public class ApplicationConfiguration {
     @Bean
     public ObjectMapper serializeMapper() {
@@ -46,27 +50,53 @@ public class ApplicationConfiguration {
     }
 
     @Bean
-    public String currencyServiceBaseURL() {
-        return "http://localhost:8080";
+    public String currencyServiceName() {
+        return "currency-service";
+    }
+
+    @Bean
+    @LoadBalanced
+    public WebClient.Builder webClientBuilder() {
+        return WebClient.builder();
+    }
+
+    @Bean
+    @LoadBalanced
+    public WebClient apiWebCurrencyLoader(WebClient.Builder webClientBuilder,
+                                          String currencyServiceName) {
+        return webClientBuilder.baseUrl("http://" + currencyServiceName).build();
     }
 
     @Bean
     @Autowired
-    public APICurrencyLoader apiCurrencyLoader(String currencyServiceBaseURL,
+    public APICurrencyLoader apiCurrencyLoader(WebClient apiWebCurrencyLoader,
                                                ObjectMapper serializeMapper) {
-        return new APICurrencyLoaderImpl(new WebLoader(currencyServiceBaseURL), serializeMapper);
+        return new APICurrencyLoaderImpl(
+                new WebLoader(apiWebCurrencyLoader),
+                serializeMapper
+        );
     }
 
     @Bean
-    public String weatherServiceBaseURL() {
-        return "http://localhost:8081";
+    public String weatherServiceName() {
+        return "weather-service";
     }
 
     @Bean
     @Autowired
-    public APIWeatherLoader apiWeatherLoader(String weatherServiceBaseURL,
+    public WebClient apiWebWeatherLoader(WebClient.Builder webClientBuilder,
+                                         String weatherServiceName) {
+        return webClientBuilder.baseUrl("http://" + weatherServiceName).build();
+    }
+
+    @Bean
+    @Autowired
+    public APIWeatherLoader apiWeatherLoader(WebClient apiWebWeatherLoader,
                                              ObjectMapper serializeMapper) {
-        return new APIWeatherLoaderImpl(new WebLoader(weatherServiceBaseURL), serializeMapper);
+        return new APIWeatherLoaderImpl(
+                new WebLoader(apiWebWeatherLoader),
+                serializeMapper
+        );
     }
 
     @Bean

@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  eureka:
+    build: ./eureka
+    ports:
+      - 8761:8761
+
+  currency:
+    build: ./currency
+    depends_on:
+      - eureka
+    ports:
+      - 8080:8080
+    environment:
+      - JAVA_OPTS=
+          -DEUREKA_SERVER=http://eureka:8761/eureka
+
+  weather:
+    build: ./weather
+    depends_on:
+      - eureka
+    ports:
+      - 8081:8081
+    environment:
+      - JAVA_OPTS=
+          -DEUREKA_SERVER=http://eureka:8761/eureka
+
+  predict:
+    build: ./predict
+    depends_on:
+      - currency
+      - weather
+    ports:
+      - 8082:8082
+    environment:
+      - JAVA_OPTS=
+          -DEUREKA_SERVER=http://eureka:8761/eureka

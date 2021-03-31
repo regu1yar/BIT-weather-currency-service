@@ -1,5 +1,6 @@
 package bit.weather;
 
+import bit.utils.WebLoader;
 import bit.utils.serialization.LocalDateDeserializer;
 import bit.utils.serialization.LocalDateKeyDeserializer;
 import bit.utils.serialization.LocalDateKeySerializer;
@@ -18,6 +19,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -52,9 +54,21 @@ public class ApplicationConfiguration {
 
     @Bean
     @Autowired
+    public WebClient weatherWebClient(String weatherWebLoaderBaseURL) {
+        return WebClient.create(weatherWebLoaderBaseURL);
+    }
+
+    @Bean
+    @Autowired
+    public WebLoader weatherWebLoader(WebClient weatherWebClient) {
+        return new WebLoader(weatherWebClient);
+    }
+
+    @Bean
+    @Autowired
     public LocationDispatcher locationDispatcher(WeatherStorageFactory weatherStorageFactory,
-                                                 String weatherWebLoaderBaseURL) {
-        return new LocationDispatcher(weatherWebLoaderBaseURL, weatherStorageFactory);
+                                                 WebLoader weatherWebLoader) {
+        return new LocationDispatcher(weatherStorageFactory, weatherWebLoader);
     }
 
     @Bean
