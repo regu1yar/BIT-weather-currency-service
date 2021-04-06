@@ -5,6 +5,7 @@ import bit.utils.datarange.DateRange;
 
 import java.time.LocalDate;
 import java.util.Map;
+import java.util.Optional;
 
 public interface CurrencyService {
     Currency getByDate(LocalDate date);
@@ -13,4 +14,6 @@ public interface CurrencyService {
     <T extends Currency> void  insertCurrencyRecords(Iterable<T> currencyRecord);
     boolean containsDate(LocalDate date);
     void deleteRange(DateRange range);
+    Optional<LocalDate> getOldestDate();
+    Optional<LocalDate> getLatestDate();
 }

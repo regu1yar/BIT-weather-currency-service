@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -57,5 +58,25 @@ public class CurrencyServiceImpl implements CurrencyService {
     @Override
     public void deleteRange(DateRange range) {
         currencyRepository.deleteRange(range.getStart(), range.getEnd());
+    }
+
+    @Override
+    public Optional<LocalDate> getOldestDate() {
+        LocalDate oldestDate = currencyRepository.getOldestDate();
+        if (oldestDate == null) {
+            return Optional.empty();
+        } else {
+            return Optional.of(oldestDate);
+        }
+    }
+
+    @Override
+    public Optional<LocalDate> getLatestDate() {
+        LocalDate latestDate = currencyRepository.getLatestDate();
+        if (latestDate == null) {
+            return Optional.empty();
+        } else {
+            return Optional.of(latestDate);
+        }
     }
 }

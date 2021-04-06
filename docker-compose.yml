@@ -6,25 +6,37 @@ services:
     ports:
       - 8761:8761
 
+  postgres:
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=password
+
   currency:
     build: ./currency
     depends_on:
       - eureka
+      - postgres
     ports:
       - 8080:8080
     environment:
       - JAVA_OPTS=
           -DEUREKA_SERVER=http://eureka:8761/eureka
+          -DPOSTGRES_SERVER=jdbc:postgresql://postgres:5432/postgres
 
   weather:
     build: ./weather
     depends_on:
       - eureka
+      - postgres
     ports:
       - 8081:8081
     environment:
       - JAVA_OPTS=
           -DEUREKA_SERVER=http://eureka:8761/eureka
+          -DPOSTGRES_SERVER=jdbc:postgresql://postgres:5432/postgres
 
   predict:
     build: ./predict

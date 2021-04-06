@@ -7,6 +7,7 @@ import bit.weather.database.service.WeatherService;
 
 import java.time.LocalDate;
 import java.util.Map;
+import java.util.Optional;
 
 public class WeatherDBLocationHistoryStorage implements HistoryStorage<Weather> {
     private final WeatherService weatherService;
@@ -43,5 +44,20 @@ public class WeatherDBLocationHistoryStorage implements HistoryStorage<Weather> 
     @Override
     public Map<LocalDate, Weather> getHistoryRange(DateRange range) {
         return weatherService.getHistoryOfRangeAtLocation(range, location);
+    }
+
+    @Override
+    public Optional<LocalDate> getOldestDate() {
+        return weatherService.getOldestDate();
+    }
+
+    @Override
+    public Optional<LocalDate> getLatestDate() {
+        return weatherService.getLatestDate();
+    }
+
+    @Override
+    public void clearRange(DateRange range) {
+        weatherService.deleteRangeByLocation(range, location);
     }
 }

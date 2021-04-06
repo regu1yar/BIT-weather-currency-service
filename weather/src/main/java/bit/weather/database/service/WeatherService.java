@@ -5,6 +5,7 @@ import bit.utils.datarange.DateRange;
 
 import java.time.LocalDate;
 import java.util.Map;
+import java.util.Optional;
 
 public interface WeatherService {
     Weather getByDateAndLocation(LocalDate date, String location);
@@ -13,4 +14,6 @@ public interface WeatherService {
     <T extends Weather> void insertWeatherRecords(Iterable<T> weatherRecords);
     boolean containsDateAndLocation(LocalDate date, String location);
     void deleteRangeByLocation(DateRange range, String location);
+    Optional<LocalDate> getOldestDate();
+    Optional<LocalDate> getLatestDate();
 }

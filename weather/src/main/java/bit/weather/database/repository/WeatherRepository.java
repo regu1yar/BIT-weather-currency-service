@@ -31,4 +31,9 @@ public interface WeatherRepository extends JpaRepository<Weather, Long> {
                                @Param("end") LocalDate end,
                                @Param("location") String location);
 
+    @Query("select min(weather.date) from Weather weather")
+    LocalDate getOldestDate();
+
+    @Query("select max(weather.date) from Weather weather")
+    LocalDate getLatestDate();
 }

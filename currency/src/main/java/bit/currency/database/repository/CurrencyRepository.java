@@ -28,4 +28,10 @@ public interface CurrencyRepository extends JpaRepository<Currency, Long> {
     @Query("delete from Currency currency where currency.date between :start and :end")
     void deleteRange(@Param("start") LocalDate start, @Param("end") LocalDate end);
 
+    @Query("select min(currency.date) from Currency currency")
+    LocalDate getOldestDate();
+
+    @Query("select max(currency.date) from Currency currency")
+    LocalDate getLatestDate();
+
 }

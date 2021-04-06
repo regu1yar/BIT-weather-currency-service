@@ -60,4 +60,21 @@ public class CachedHistoryLoader<T> implements HistoryLoader<T> {
 
         cachedRange = cachedRange.unionToRange(range);
     }
+
+    void initializeCachedRange() {
+        Optional<LocalDate> oldestDate = historyStorage.getOldestDate();
+        Optional<LocalDate> latestDate = historyStorage.getLatestDate();
+        if (oldestDate.isPresent() && latestDate.isPresent()) {
+            LocalDate curDate = latestDate.get().minusDays(1);
+            while (!curDate.plusDays(1).equals(oldestDate.get()) && !historyStorage.isEmpty(curDate)) {
+                curDate = curDate.minusDays(1);
+            }
+
+            if (!oldestDate.get().isAfter(curDate)) {
+                historyStorage.clearRange(new DateRange(oldestDate.get(), curDate));
+            }
+
+            cachedRange = new DateRange(curDate.plusDays(1), latestDate.get());
+        }
+    }
 }

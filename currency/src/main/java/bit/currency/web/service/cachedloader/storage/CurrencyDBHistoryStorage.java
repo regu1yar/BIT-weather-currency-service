@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class CurrencyDBHistoryStorage implements HistoryStorage<Currency> {
@@ -43,5 +44,20 @@ public class CurrencyDBHistoryStorage implements HistoryStorage<Currency> {
     @Override
     public Map<LocalDate, Currency> getHistoryRange(DateRange range) {
         return currencyService.getHistoryOfRange(range);
+    }
+
+    @Override
+    public Optional<LocalDate> getOldestDate() {
+        return currencyService.getOldestDate();
+    }
+
+    @Override
+    public Optional<LocalDate> getLatestDate() {
+        return currencyService.getLatestDate();
+    }
+
+    @Override
+    public void clearRange(DateRange range) {
+        currencyService.deleteRange(range);
     }
 }

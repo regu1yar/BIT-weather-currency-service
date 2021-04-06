@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -57,5 +58,25 @@ public class WeatherServiceImpl implements WeatherService {
     @Override
     public void deleteRangeByLocation(DateRange range, String location) {
         weatherRepository.deleteRangeByLocation(range.getStart(), range.getEnd(), location);
+    }
+
+    @Override
+    public Optional<LocalDate> getOldestDate() {
+        LocalDate oldestDate = weatherRepository.getOldestDate();
+        if (oldestDate == null) {
+            return Optional.empty();
+        } else {
+            return Optional.of(oldestDate);
+        }
+    }
+
+    @Override
+    public Optional<LocalDate> getLatestDate() {
+        LocalDate latestDate = weatherRepository.getLatestDate();
+        if (latestDate == null) {
+            return Optional.empty();
+        } else {
+            return Optional.of(latestDate);
+        }
     }
 }
