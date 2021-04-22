@@ -1,0 +1,14 @@
+localhost           ansible_connection=local
+
+[webservers]
+ubuntu_webserver
+
+[dbservers]
+centos_dbserver
+
+[Ubuntu]
+ubuntu_webserver
+
+[CentOS]
+centos_dbserver
+

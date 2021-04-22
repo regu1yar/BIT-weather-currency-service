@@ -1,0 +1,41 @@
+---
+- name: Deploy services
+  hosts: webservers
+  tasks:
+    - name: Copy docker images
+      copy: src={{ item.src }} dest={{ item.dest }}
+      loop:
+        - { src: '{{ local_files_dir }}/{{ services.eureka.name }}.tar', dest: '{{ deploy_path }}/{{ services.eureka.name }}.tar' }
+        - { src: '{{ local_files_dir }}/{{ services.weather.name }}.tar', dest: '{{ deploy_path }}/{{ services.weather.name }}.tar' }
+        - { src: '{{ local_files_dir }}/{{ services.currency.name }}.tar', dest: '{{ deploy_path }}/{{ services.currency.name }}.tar' }
+        - { src: '{{ local_files_dir }}/{{ services.predict.name }}.tar', dest: '{{ deploy_path }}/{{ services.predict.name }}.tar' }
+
+    - name: Process and copy compose file template
+      template:
+        src: "{{ local_templates_dir }}/docker-compose.yml.j2"
+        dest: "{{ deploy_path }}/docker-compose.yml"
+
+    - name: Load docker images
+      docker_image:
+        name: "{{ item.image_name }}"
+        tag: latest
+        load_path: "{{ item.load_path }}"
+        source: load
+      loop:      
+        - { image_name: '{{ docker_image_prefix }}/{{ services.eureka.name }}', load_path: '{{ deploy_path }}/{{ services.eureka.name }}.tar' }
+        - { image_name: '{{ docker_image_prefix }}/{{ services.weather.name }}', load_path: '{{ deploy_path }}/{{ services.weather.name }}.tar' }
+        - { image_name: '{{ docker_image_prefix }}/{{ services.currency.name }}', load_path: '{{ deploy_path }}/{{ services.currency.name }}.tar' }
+        - { image_name: '{{ docker_image_prefix }}/{{ services.predict.name }}', load_path: '{{ deploy_path }}/{{ services.predict.name }}.tar' }
+
+    - name: Tear down existing services via docker-compose
+      docker_compose:
+        project_src: "{{ deploy_path }}"
+        state: absent
+
+    - name: Create and start services via docker-compose
+      docker_compose:
+        project_src: "{{ deploy_path }}"
+      register: output
+
+    - debug:
+        var: output

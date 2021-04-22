@@ -1,0 +1,29 @@
+---
+- name: Local docker images build
+  hosts: localhost
+  tasks:
+    - name: Build images
+      docker_image:
+        build:
+          path: "{{ item.path }}"
+        name: "{{ item.name }}"
+        tag: latest
+        source: build
+      loop:
+        - { path: '../eureka', name: '{{ docker_image_prefix }}/{{ services.eureka.name }}' }
+        - { path: '../weather', name: '{{ docker_image_prefix }}/{{ services.weather.name }}' }
+        - { path: '../currency', name: '{{ docker_image_prefix }}/{{ services.currency.name }}' }
+        - { path: '../predict', name: '{{ docker_image_prefix }}/{{ services.predict.name }}' }
+
+    - name: Export images
+      docker_image:
+        name: "{{ item.name }}"
+        tag: latest
+        archive_path: "{{ item.archive_path }}"
+        source: local
+      loop:
+        - { archive_path: '{{ local_files_dir }}/{{ services.eureka.name }}.tar', name: '{{ docker_image_prefix }}/{{ services.eureka.name }}' }
+        - { archive_path: '{{ local_files_dir }}/{{ services.weather.name }}.tar', name: '{{ docker_image_prefix }}/{{ services.weather.name }}' }
+        - { archive_path: '{{ local_files_dir }}/{{ services.currency.name }}.tar', name: '{{ docker_image_prefix }}/{{ services.currency.name }}' }
+        - { archive_path: '{{ local_files_dir }}/{{ services.predict.name }}.tar', name: '{{ docker_image_prefix }}/{{ services.predict.name }}' }
+
