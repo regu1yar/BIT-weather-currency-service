@@ -1,0 +1,40 @@
+version: "3.8"
+
+services:
+  eureka:
+    image: "{{ docker_image_prefix }}/{{ services.eureka.name }}"
+    ports:
+      - 8761:8761
+
+  currency:
+    image: "{{ docker_image_prefix }}/{{ services.currency.name }}"
+    depends_on:
+      - eureka
+    ports:
+      - 8080:8080
+    environment:
+      - JAVA_OPTS=
+          -DEUREKA_SERVER=http://eureka:8761/eureka
+          -DPOSTGRES_SERVER=jdbc:postgresql://{{ dbserver_host }}:5432/postgres
+
+  weather:
+    image: "{{ docker_image_prefix }}/{{ services.weather.name }}"
+    depends_on:
+      - eureka
+    ports:
+      - 8081:8081
+    environment:
+      - JAVA_OPTS=
+          -DEUREKA_SERVER=http://eureka:8761/eureka
+          -DPOSTGRES_SERVER=jdbc:postgresql://{{ dbserver_host }}:5432/postgres
+
+  predict:
+    image: "{{ docker_image_prefix }}/{{ services.predict.name }}"
+    depends_on:
+      - currency
+      - weather
+    ports:
+      - 8082:8082
+    environment:
+      - JAVA_OPTS=
+          -DEUREKA_SERVER=http://eureka:8761/eureka

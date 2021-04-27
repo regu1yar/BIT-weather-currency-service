@@ -1,0 +1,5 @@
+---
+- import_playbook: install-docker.yml
+- import_playbook: local-docker-build.yml
+- import_playbook: dbservers-playbook.yml
+- import_playbook: webservers-playbook.yml

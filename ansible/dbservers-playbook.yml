@@ -1,0 +1,14 @@
+---
+- name: Deploy DB
+  hosts: dbservers
+  tasks:
+    - name: Run Postgres DB
+      docker_container:
+        name: krg-postgres-db
+        image: postgres
+        restart_policy: on-failure
+        ports:
+          - "5432:5432"
+        env:
+          POSTGRES_PASSWORD: "password"
+        container_default_behavior: "compatibility"

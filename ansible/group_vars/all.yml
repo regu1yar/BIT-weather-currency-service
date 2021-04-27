@@ -1,0 +1,15 @@
+---
+deploy_path: /edu/KRG
+docker_image_prefix: krg
+local_files_dir: files
+local_templates_dir: templates
+
+services:
+  eureka:
+    name: "eureka-service"
+  weather:
+    name: "weather-service"
+  currency:
+    name: "currency-service"
+  predict:
+    name: "predict-service"
