@@ -20,7 +20,10 @@ import bit.currency.web.service.impl.CurrencyWebServiceImpl;
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.actuate.autoconfigure.metrics.MeterRegistryCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -81,5 +84,11 @@ public class ApplicationConfiguration {
     public CurrencyAPIService currencyAPIService(HistoryLoader<Currency> usdHistoryLoader,
                                                  ObjectMapper serializeMapper) {
         return new CurrencyAPIServiceImpl(usdHistoryLoader, serializeMapper);
+    }
+
+    @Bean
+    MeterRegistryCustomizer<MeterRegistry> configurer(
+            @Value("${spring.application.name}") String applicationName) {
+        return (registry) -> registry.config().commonTags("application", applicationName);
     }
 }
