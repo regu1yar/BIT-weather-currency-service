@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "predict.fullname" . }}
+  labels:
+    {{- include "predict.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.config.replicas }}
+  selector:
+    matchLabels:
+      {{- include "predict.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      name: {{ include "predict.fullname" . }}
+      labels:
+        {{- include "predict.labels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ include "predict.image" . | quote }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: {{ include "predict.name" . }}
+              containerPort: {{ .Values.config.port }}
+          env:
+            - name: JAVA_OPTS
+              value: >
+                -DEUREKA_SERVER=http://wcservice-eureka:8761/eureka

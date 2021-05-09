@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "currency.fullname" . }}
+  labels:
+    {{- include "currency.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.config.replicas }}
+  selector:
+    matchLabels:
+      {{- include "currency.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      name: {{ include "currency.fullname" . }}
+      labels:
+        {{- include "currency.labels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ include "currency.image" . | quote }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: {{ include "currency.name" . }}
+              containerPort: {{ .Values.config.port }}
+          env:
+            - name: JAVA_OPTS
+              value: >
+                -DEUREKA_SERVER=http://wcservice-eureka:8761/eureka
+                -DPOSTGRES_SERVER=jdbc:postgresql://wcservice-postgres:5432/postgres

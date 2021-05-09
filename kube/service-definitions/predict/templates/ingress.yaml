@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "predict.fullname" . }}
+  labels:
+    {{- include "predict.labels" . | nindent 4 }}
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /predict
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /predict
+            pathType: Exact
+            backend:
+              service:
+                name: {{ include "predict.fullname" . }}
+                port:
+                  number: {{ .Values.config.port }}

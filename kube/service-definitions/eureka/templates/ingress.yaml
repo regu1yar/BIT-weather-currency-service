@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "eureka.fullname" . }}
+  labels:
+    {{- include "eureka.labels" . | nindent 4 }}
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /eureka
+            pathType: Exact
+            backend:
+              service:
+                name: {{ include "eureka.fullname" . }}
+                port:
+                  number: {{ .Values.config.port }}
