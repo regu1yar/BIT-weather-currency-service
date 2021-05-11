@@ -11,68 +11,97 @@ import java.util.Collections;
 import java.util.List;
 
 @Entity
+@Table(name = "weather")
 public class Weather implements DataRecord {
-    @Id
     @Getter
     @Setter
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "weather_id_seq"
+    )
+    @SequenceGenerator(
+            name = "weather_id_seq",
+            sequenceName = "weather_id_sequence",
+            allocationSize = 1
+    )
+    @Column(
+            name = "id",
+            unique = true,
+            updatable = false,
+            nullable = false
+    )
     private long weatherRecordId;
 
     @Getter
     @Setter
+    @Column(name = "date")
     @OrderBy
     private LocalDate date;
 
     @Getter
     @Setter
+    @Column(name = "location")
     private String location;
 
     @Getter
     @Setter
+    @Column(name = "pretty_location")
     private String prettyLocation;
 
     @Getter
     @Setter
+    @Column(name = "max_temp")
     private double maxTemp;
 
     @Getter
     @Setter
+    @Column(name = "min_temp")
     private double minTemp;
 
     @Getter
     @Setter
+    @Column(name = "average_temp")
     private double averageTemp;
 
     @Getter
     @Setter
+    @Column(name = "max_wind")
     private double maxWind;
 
     @Getter
     @Setter
+    @Column(name = "precipitation")
     private double precipitation;
 
     @Getter
     @Setter
+    @Column(name = "visibility")
     private double visibility;
 
     @Getter
     @Setter
+    @Column(name = "humidity")
     private double humidity;
 
     @Getter
     @Setter
+    @Column(name = "uv_index")
     private double uvIndex;
 
     @Getter
     @Setter
+    @Column(name = "weather_condition")
     private String weatherCondition;
 
     @Getter
     @Setter
+    @Column(name = "sunrise")
     private String sunrise;
 
     @Getter
     @Setter
+    @Column(name = "sunset")
     private String sunset;
 
     public Weather(LocalDate date, String location, String prettyLocation, Forecastday forecast) {

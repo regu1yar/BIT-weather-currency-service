@@ -1,0 +1,1 @@
+CREATE SEQUENCE IF NOT EXISTS currency_id_sequence START 1;

@@ -10,24 +10,42 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "currency")
 public class Currency implements DataRecord {
-    @Id
     @Getter
     @Setter
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "currency_id_seq"
+    )
+    @SequenceGenerator(
+            name = "currency_id_seq",
+            sequenceName = "currency_id_sequence",
+            allocationSize = 1
+    )
+    @Column(
+            name = "id",
+            unique = true,
+            updatable = false,
+            nullable = false
+    )
     private long currencyRecordId;
 
     @Getter
     @Setter
+    @Column(name = "date")
     @OrderBy
     private LocalDate date;
 
     @Getter
     @Setter
+    @Column(name = "currency_value")
     private String currencyValue;
 
     @Getter
     @Setter
+    @Column(name = "currency_name")
     private String currencyName;
 
     public Currency(LocalDate date, String currencyValue, String currencyName) {
@@ -52,3 +70,4 @@ public class Currency implements DataRecord {
         return tmpList;
     }
 }
+

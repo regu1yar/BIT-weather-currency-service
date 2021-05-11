@@ -1,0 +1,1 @@
+CREATE SEQUENCE IF NOT EXISTS weather_id_sequence START 1;
