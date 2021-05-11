@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "eureka.fullname" . }}
+  labels:
+    {{- include "eureka.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "eureka.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      name: {{ include "eureka.fullname" . }}
+      labels:
+        {{- include "eureka.labels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ include "eureka.image" . | quote }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: {{ include "eureka.name" . }}
+              containerPort: {{ .Values.config.port }}

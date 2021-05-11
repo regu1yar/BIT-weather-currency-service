@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "currency.fullname" . }}
+  labels:
+    {{- include "currency.labels" . | nindent 4 }}
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /currency
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /currency
+            pathType: Exact
+            backend:
+              service:
+                name: {{ include "currency.fullname" . }}
+                port:
+                  number: {{ .Values.config.port }}

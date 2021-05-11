@@ -1,0 +1,10 @@
+image:
+  repository: "localhost:5000/eureka-service"
+  tag: 1.0.0
+  pullPolicy: IfNotPresent
+
+config:
+  port: 8761
+
+service:
+  type: ClusterIP

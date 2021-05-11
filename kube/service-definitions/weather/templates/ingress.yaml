@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "weather.fullname" . }}
+  labels:
+    {{- include "weather.labels" . | nindent 4 }}
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /weather
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /weather
+            pathType: Exact
+            backend:
+              service:
+                name: {{ include "weather.fullname" . }}
+                port:
+                  number: {{ .Values.config.port }}

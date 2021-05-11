@@ -1,0 +1,23 @@
+image:
+  repository: "postgres"
+  pullPolicy: IfNotPresent
+
+config:
+  postgres_user: postgres
+  postgres_password: password
+  port: 5432
+  storage_directory: /var/lib/postgresql/data
+
+persistence:
+  requests:
+    storage: 1Gi
+
+service:
+  type: ClusterIP
+
+env:
+  PGDATA: /var/lib/postgresql/data/pgdata
+  POSTGRES_DB: postgres
+
+# nameOverride: ""
+# fullnameOverride: ""
