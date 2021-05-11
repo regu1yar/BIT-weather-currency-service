@@ -48,3 +48,24 @@ services:
     environment:
       - JAVA_OPTS=
           -DEUREKA_SERVER=http://eureka:8761/eureka
+
+  prometheus:
+    image: prom/prometheus
+    restart: unless-stopped
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - 9090:9090
+    depends_on:
+      - eureka
+      - currency
+      - weather
+      - predict
+
+  grafana:
+    image: grafana/grafana
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    depends_on:
+      - prometheus
